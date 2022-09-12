@@ -1,3 +1,5 @@
+. utils/envVar.sh
+
 ENROLLMENT_USER=$1
 ENROLLMENT_PASSWORD=$2
 ENROLLMENT_ORG_NAME=$3
@@ -77,6 +79,7 @@ rm $ROOT_DIR/config.yaml
 
 if [ "$CA_TYPE" ==  "$CA_TYPE_TLS" ]; then
         ENROLLMENT_USER_NAME=$ENROLLMENT_USER-$ENROLLMENT_ORG_NAME-$DOMAIN_NAME
+        set -x
         $ROOT_DIR/bin/fabric-ca-client enroll -d -u https://$ENROLLMENT_USER_NAME:$ENROLLMENT_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --enrollment.profile tls --csr.hosts $CSR_HOST --mspdir $MSP_DIR/tls >&log.txt
         res=$?
         { set +x; } 2>/dev/null
@@ -91,6 +94,7 @@ if [ "$CA_TYPE" ==  "$CA_TYPE_TLS" ]; then
         echo "fabric-ca-client enroll -d -u https://$ENROLLMENT_USER_NAME:$ENROLLMENT_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --enrollment.profile tls --csr.hosts $CSR_HOST --mspdir $MSP_DIR/tls"
     else
         ENROLLMENT_USER_NAME=$ENROLLMENT_USER-$ENROLLMENT_ORG_NAME-$DOMAIN_NAME
+        set -x
         $ROOT_DIR/bin/fabric-ca-client enroll -d -u https://$ENROLLMENT_USER_NAME:$ENROLLMENT_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --csr.hosts $CSR_HOST --mspdir $MSP_DIR/msp >&log.txt
         res=$?
         { set +x; } 2>/dev/null

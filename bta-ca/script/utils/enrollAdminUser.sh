@@ -19,7 +19,7 @@ if [ "$CA_SERVER_TYPE" == "$CA_SERVER_TYPE_TLSCA" ]; then
     mkdir $ROOT_DIR/fabric-ca-client/tls-root-cert
     cp -r $ROOT_DIR/fabric-ca-server-tls/ca-cert.pem $ROOT_DIR/fabric-ca-client/tls-root-cert/tls-ca-cert.pem
 else
-    echo "no match"
+    echo "no match for $CA_SERVER_TYPE"
 fi
 
 
@@ -37,11 +37,12 @@ export FABRIC_CA_CLIENT_HOME=$ROOT_DIR/fabric-ca-client
         successln "---------------------------------------------------------------------------"
         successln "Successfully Enrolled Admin User '$CA_SERVER_USER' for TLS"
         successln "---------------------------------------------------------------------------"
-        PRIVATE_FILE=$ROOT_DIR/fabric-ca-client/tls-ca/$CA_SERVER_USER/msp/keystsore
         
+        PRIVATE_FILE=$ROOT_DIR/fabric-ca-client/tls-ca/$CA_SERVER_USER/msp/keystore
         mv $PRIVATE_FILE/*_sk $PRIVATE_FILE/key.pem
         echo "fabric-ca-client enroll -d -u https://$CA_SERVER_USER:$CA_SERVER_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --enrollment.profile tls --csr.hosts $CSR_HOST --mspdir tls-ca/$CA_SERVER_USER/msp"
     else
+        set -x
         $ROOT_DIR/bin/fabric-ca-client enroll -d -u https://$CA_SERVER_USER:$CA_SERVER_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --csr.hosts $CSR_HOST --mspdir org-ca/$CA_SERVER_USER/msp >&log.txt
         res=$?
         { set +x; } 2>/dev/null
