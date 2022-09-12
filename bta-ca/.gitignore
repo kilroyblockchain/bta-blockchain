@@ -1,0 +1,10 @@
+*
+!script/
+!script/*.sh
+!README.md
+!.gitignore
+!script/utils/
+!script/utils/*.sh
+
+!bin
+!bin/*
