@@ -1,0 +1,36 @@
+2022/09/19 17:44:20 [DEBUG] Set log level: 
+2022/09/19 17:44:20 [DEBUG] Home directory: /Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client
+2022/09/19 17:44:20 [INFO] Configuration file location: /Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/fabric-ca-client-config.yaml
+2022/09/19 17:44:20 [DEBUG] Checking for enrollment
+2022/09/19 17:44:20 [DEBUG] Initializing client with config: &{URL:https://localhost:7057 MSPDir:org-ca/rca-orderer/msp/ TLS:{Enabled:true CertFiles:[tls-root-cert/tls-ca-cert.pem] Client:{KeyFile: CertFile:}} Enrollment:{ Name: Secret:**** CAName: AttrReqs:[] Profile: Label: CSR:<nil> Type:x509  } CSR:{CN:tls-admin Names:[{C:US ST:North Carolina L: O:Hyperledger OU:Fabric SerialNumber:}] Hosts:[Jenishs-MacBook-Air.local] KeyRequest:0xc0002cb0a0 CA:<nil> SerialNumber:} ID:{Name:orderer2-org-bta.kilroy Type:orderer Secret:Orderer2-Pw MaxEnrollments:0 Affiliation: Attributes:[] CAName:} Revoke:{Name: Serial: AKI: Reason: CAName: GenCRL:false} CAInfo:{CAName:} CAName: CSP:0xc0002cb420 Debug:true LogLevel:}
+2022/09/19 17:44:20 [DEBUG] Initializing BCCSP: &{ProviderName:SW SwOpts:0xc0002d9a40 PluginOpts:<nil>}
+2022/09/19 17:44:20 [DEBUG] Initializing BCCSP with software options &{SecLevel:256 HashFamily:SHA2 FileKeystore:0xc0003307e0 DummyKeystore:<nil> InmemKeystore:<nil>}
+2022/09/19 17:44:20 [INFO] TLS Enabled
+2022/09/19 17:44:20 [DEBUG] CA Files: [/Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/tls-root-cert/tls-ca-cert.pem]
+2022/09/19 17:44:20 [DEBUG] Client Cert File: 
+2022/09/19 17:44:20 [DEBUG] Client Key File: 
+2022/09/19 17:44:20 [DEBUG] Client TLS certificate and/or key file not provided
+2022/09/19 17:44:20 [DEBUG] CheckIdemixEnrollment - ipkFile: /Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/org-ca/rca-orderer/msp/IssuerPublicKey, idemixCredFile: /Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/org-ca/rca-orderer/msp/user/SignerConfig
+2022/09/19 17:44:20 [DEBUG] Client configuration settings: &{URL:https://localhost:7057 MSPDir:/Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/org-ca/rca-orderer/msp TLS:{Enabled:true CertFiles:[/Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/tls-root-cert/tls-ca-cert.pem] Client:{KeyFile: CertFile:}} Enrollment:{ Name: Secret:**** CAName: AttrReqs:[] Profile: Label: CSR:<nil> Type:x509  } CSR:{CN:tls-admin Names:[{C:US ST:North Carolina L: O:Hyperledger OU:Fabric SerialNumber:}] Hosts:[Jenishs-MacBook-Air.local] KeyRequest:0xc0002cb0a0 CA:<nil> SerialNumber:} ID:{Name:orderer2-org-bta.kilroy Type:orderer Secret:Orderer2-Pw MaxEnrollments:0 Affiliation: Attributes:[] CAName:} Revoke:{Name: Serial: AKI: Reason: CAName: GenCRL:false} CAInfo:{CAName:} CAName: CSP:0xc0002cb420 Debug:true LogLevel:}
+2022/09/19 17:44:20 [DEBUG] Entered runRegister
+2022/09/19 17:44:20 [DEBUG] Initializing client with config: &{URL:https://localhost:7057 MSPDir:/Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/org-ca/rca-orderer/msp TLS:{Enabled:true CertFiles:[/Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/tls-root-cert/tls-ca-cert.pem] Client:{KeyFile: CertFile:}} Enrollment:{ Name: Secret:**** CAName: AttrReqs:[] Profile: Label: CSR:<nil> Type:x509  } CSR:{CN:tls-admin Names:[{C:US ST:North Carolina L: O:Hyperledger OU:Fabric SerialNumber:}] Hosts:[Jenishs-MacBook-Air.local] KeyRequest:0xc0002cb0a0 CA:<nil> SerialNumber:} ID:{Name:orderer2-org-bta.kilroy Type:orderer Secret:Orderer2-Pw MaxEnrollments:0 Affiliation: Attributes:[] CAName:} Revoke:{Name: Serial: AKI: Reason: CAName: GenCRL:false} CAInfo:{CAName:} CAName: CSP:0xc0002cb420 Debug:true LogLevel:}
+2022/09/19 17:44:20 [DEBUG] Initializing BCCSP: &{ProviderName:SW SwOpts:0xc0002d9a40 PluginOpts:<nil>}
+2022/09/19 17:44:20 [DEBUG] Initializing BCCSP with software options &{SecLevel:256 HashFamily:SHA2 FileKeystore:0xc0003307e0 DummyKeystore:<nil> InmemKeystore:<nil>}
+2022/09/19 17:44:20 [INFO] TLS Enabled
+2022/09/19 17:44:20 [DEBUG] CA Files: [/Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/tls-root-cert/tls-ca-cert.pem]
+2022/09/19 17:44:20 [DEBUG] Client Cert File: 
+2022/09/19 17:44:20 [DEBUG] Client Key File: 
+2022/09/19 17:44:20 [DEBUG] Client TLS certificate and/or key file not provided
+2022/09/19 17:44:20 [DEBUG] Loading identity: keyFile=/Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/org-ca/rca-orderer/msp/keystore/key.pem, certFile=/Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/org-ca/rca-orderer/msp/signcerts/cert.pem
+2022/09/19 17:44:20 [DEBUG] No credential found at /Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/org-ca/rca-orderer/msp/user/SignerConfig: open /Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/org-ca/rca-orderer/msp/user/SignerConfig: no such file or directory
+2022/09/19 17:44:20 [DEBUG] No Idemix credential found at /Users/jenishbajracharya/my-files/kilroy/bta/bta-final/bta-blockchain/bta-ca/fabric-ca-client/org-ca/rca-orderer/msp/user/SignerConfig
+2022/09/19 17:44:20 [DEBUG] Register { Name:orderer2-org-bta.kilroy Type:orderer Secret:**** MaxEnrollments:0 Affiliation: Attributes:[] CAName:  }
+2022/09/19 17:44:20 [DEBUG] Adding token-based authorization header
+2022/09/19 17:44:20 [DEBUG] Sending request
+POST https://localhost:7057/register
+{"id":"orderer2-org-bta.kilroy","type":"orderer","secret":"Orderer2-Pw","affiliation":""}
+2022/09/19 17:44:21 [DEBUG] Received response
+statusCode=201 (201 Created)
+2022/09/19 17:44:21 [DEBUG] Response body result: map[secret:Orderer2-Pw]
+2022/09/19 17:44:21 [DEBUG] The register request completed successfully
+Password: Orderer2-Pw

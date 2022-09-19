@@ -41,6 +41,9 @@ echo "OCA PID: " $pid_oca
 
 sleep 2
 
+ROOT_DIR=$PWD/../
+
+mkdir $ROOT_DIR/bta-ca
 
 #Deploy TLS CA Certificate Authority
 set -x
@@ -868,3 +871,5 @@ kill -9 $pid_oca
 kill -9 $pid_tlsca
 
 sleep 2
+
+cp -r $ROOT_DIR/bta-ca/crypto-config $ROOT_DIR/bta-network

@@ -1,0 +1,415 @@
+Organizations:
+  - &OrdererBtaKilroy
+    # DefaultOrg defines the organization which is used in the sampleconfig
+    # of the fabric.git development environment
+    Name: OrdererBtaKilroy
+
+    # ID to load the MSP definition as
+    ID: OrdererBtaKilroyMSP
+
+    # MSPDir is the filesystem path which contains the MSP configuration
+    MSPDir: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/msp
+
+    # Policies defines the set of policies at this level of the config tree
+    # For organization policies, their canonical path is usually
+    #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('OrdererBtaKilroyMSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('OrdererBtaKilroyMSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('OrdererBtaKilroyMSP.admin')"
+    OrdererEndpoints:
+      - orderer0.org.bta.kilroy:7050
+      - orderer1.org.bta.kilroy:7050
+      - orderer2.org.bta.kilroy:7050
+
+  - &PeerO1SuperAdminBtaKilroy
+    # DefaultOrg defines the organization which is used in the sampleconfig
+    # of the fabric.git development environment
+    Name: PeerO1SuperAdminBtaKilroyMSP
+
+    # ID to load the MSP definition as
+    ID: PeerO1SuperAdminBtaKilroyMSP
+
+    MSPDir: ../crypto-config/peerOrganizations/peer.o1-super-admin.bta.kilroy/msp
+
+    # Policies defines the set of policies at this level of the config tree
+    # For organization policies, their canonical path is usually
+    #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('PeerO1SuperAdminBtaKilroyMSP.admin', 'PeerO1SuperAdminBtaKilroyMSP.peer', 'PeerO1SuperAdminBtaKilroyMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('PeerO1SuperAdminBtaKilroyMSP.admin', 'PeerO1SuperAdminBtaKilroyMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('PeerO1SuperAdminBtaKilroyMSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('PeerO1SuperAdminBtaKilroyMSP.peer')"
+
+    # leave this flag set to true.
+    AnchorPeers:
+      # AnchorPeers defines the location of peers which can be used
+      # for cross org gossip communication.  Note, this value is only
+      # encoded in the genesis block in the Application section context
+      - Host: peer0.o1-super-admin.bta.kilroy
+        Port: 7051
+
+  - &PeerO2AdminBtaKilroy
+    # DefaultOrg defines the organization which is used in the sampleconfig
+    # of the fabric.git development environment
+    Name: PeerO2AdminBtaKilroyMSP
+
+    # ID to load the MSP definition as
+    ID: PeerO2AdminBtaKilroyMSP
+
+    MSPDir: ../crypto-config/peerOrganizations/peer.o2-admin.bta.kilroy/msp
+
+    # Policies defines the set of policies at this level of the config tree
+    # For organization policies, their canonical path is usually
+    #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('PeerO2AdminBtaKilroyMSP.admin', 'PeerO2AdminBtaKilroyMSP.peer', 'PeerO2AdminBtaKilroyMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('PeerO2AdminBtaKilroyMSP.admin', 'PeerO2AdminBtaKilroyMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('PeerO2AdminBtaKilroyMSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('PeerO2AdminBtaKilroyMSP.peer')"
+
+    # leave this flag set to true.
+    AnchorPeers:
+      # AnchorPeers defines the location of peers which can be used
+      # for cross org gossip communication.  Note, this value is only
+      # encoded in the genesis block in the Application section context
+      - Host: peer0.o2-admin.bta.kilroy
+        Port: 7061
+
+  - &PeerO3ShBtaKilroy
+    # DefaultOrg defines the organization which is used in the sampleconfig
+    # of the fabric.git development environment
+    Name: PeerO3ShBtaKilroyMSP
+
+    # ID to load the MSP definition as
+    ID: PeerO3ShBtaKilroyMSP
+
+    MSPDir: ../crypto-config/peerOrganizations/peer.o3-sh.bta.kilroy/msp
+
+    # Policies defines the set of policies at this level of the config tree
+    # For organization policies, their canonical path is usually
+    #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('PeerO3ShBtaKilroyMSP.admin', 'PeerO3ShBtaKilroyMSP.peer', 'PeerO3ShBtaKilroyMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('PeerO3ShBtaKilroyMSP.admin', 'PeerO3ShBtaKilroyMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('PeerO3ShBtaKilroyMSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('PeerO3ShBtaKilroyMSP.peer')"
+
+    # leave this flag set to true.
+    AnchorPeers:
+      # AnchorPeers defines the location of peers which can be used
+      # for cross org gossip communication.  Note, this value is only
+      # encoded in the genesis block in the Application section context
+      - Host: peer0.o3-sh.bta.kilroy
+        Port: 7071
+
+  - &PeerO4MLOpsBtaKilroy
+    # DefaultOrg defines the organization which is used in the sampleconfig
+    # of the fabric.git development environment
+    Name: PeerO4MLOpsBtaKilroyMSP
+
+    # ID to load the MSP definition as
+    ID: PeerO4MLOpsBtaKilroyMSP
+
+    MSPDir: ../crypto-config/peerOrganizations/peer.o4-mlops.bta.kilroy/msp
+
+    # Policies defines the set of policies at this level of the config tree
+    # For organization policies, their canonical path is usually
+    #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('PeerO4MLOpsBtaKilroyMSP.admin', 'PeerO4MLOpsBtaKilroyMSP.peer', 'PeerO4MLOpsBtaKilroyMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('PeerO4MLOpsBtaKilroyMSP.admin', 'PeerO4MLOpsBtaKilroyMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('PeerO4MLOpsBtaKilroyMSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('PeerO4MLOpsBtaKilroyMSP.peer')"
+
+    # leave this flag set to true.
+    AnchorPeers:
+      # AnchorPeers defines the location of peers which can be used
+      # for cross org gossip communication.  Note, this value is only
+      # encoded in the genesis block in the Application section context
+      - Host: peer0.o4-mlops.bta.kilroy
+        Port: 7081
+
+  - &PeerO5AIEngineerBtaKilroy
+    # DefaultOrg defines the organization which is used in the sampleconfig
+    # of the fabric.git development environment
+    Name: PeerO5AIEngineerBtaKilroyMSP
+
+    # ID to load the MSP definition as
+    ID: PeerO5AIEngineerBtaKilroyMSP
+
+    MSPDir: ../crypto-config/peerOrganizations/peer.o5-ai-engineer.bta.kilroy/msp
+
+    # Policies defines the set of policies at this level of the config tree
+    # For organization policies, their canonical path is usually
+    #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('PeerO5AIEngineerBtaKilroyMSP.admin', 'PeerO5AIEngineerBtaKilroyMSP.peer', 'PeerO5AIEngineerBtaKilroyMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('PeerO5AIEngineerBtaKilroyMSP.admin', 'PeerO5AIEngineerBtaKilroyMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('PeerO5AIEngineerBtaKilroyMSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('PeerO5AIEngineerBtaKilroyMSP.peer')"
+
+    # leave this flag set to true.
+    AnchorPeers:
+      # AnchorPeers defines the location of peers which can be used
+      # for cross org gossip communication.  Note, this value is only
+      # encoded in the genesis block in the Application section context
+      - Host: peer0.o5-ai-engineer.bta.kilroy
+        Port: 7091
+#
+################################################################################
+Capabilities:
+  # Channel capabilities apply to both the orderers and the peers and must be
+  # supported by both.
+  # Set the value of the capability to true to require it.
+  Channel: &ChannelCapabilities
+    V2_0: true
+  Orderer: &OrdererCapabilities
+    V2_0: true
+  Application: &ApplicationCapabilities
+    V2_0: true
+
+################################################################################
+#
+#   SECTION: Application
+#
+#   - This section defines the values to encode into a config transaction or
+#   genesis block for application related parameters
+#
+################################################################################
+Application: &ApplicationDefaults
+  # Organizations is the list of orgs which are defined as participants on
+  # the application side of the network
+  Organizations:
+
+  # Policies defines the set of policies at this level of the config tree
+  # For Application policies, their canonical path is
+  #   /Channel/Application/<PolicyName>
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: 'ANY Readers'
+    Writers:
+      Type: ImplicitMeta
+      Rule: 'ANY Writers'
+    Admins:
+      Type: ImplicitMeta
+      Rule: 'MAJORITY Admins'
+    LifecycleEndorsement:
+      Type: ImplicitMeta
+      Rule: 'MAJORITY Endorsement'
+    Endorsement:
+      Type: ImplicitMeta
+      Rule: 'MAJORITY Endorsement'
+  Capabilities:
+    <<: *ApplicationCapabilities
+################################################################################
+#
+#   SECTION: Orderer
+#
+#   - This section defines the values to encode into a config transaction or
+#   genesis block for orderer related parameters
+#
+################################################################################
+Orderer: &OrdererDefaults
+  # Orderer Type: The orderer implementation to start
+  # Available types are "solo","kafka"  and "etcdraft"
+  OrdererType: etcdraft
+
+  # Batch Timeout: The amount of time to wait before creating a batch
+  BatchTimeout: 2s
+
+  # Batch Size: Controls the number of messages batched into a block
+  BatchSize:
+    # Max Message Count: The maximum number of messages to permit in a batch
+    MaxMessageCount: 10
+
+    # Absolute Max Bytes: The absolute maximum number of bytes allowed for
+    # the serialized messages in a batch.
+    AbsoluteMaxBytes: 99 MB
+
+    # Preferred Max Bytes: The preferred maximum number of bytes allowed for
+    # the serialized messages in a batch. A message larger than the preferred
+    # max bytes will result in a batch larger than preferred max bytes.
+    PreferredMaxBytes: 512 KB
+
+  # EtcdRaft defines configuration which must be set when the "etcdraft"
+  # orderertype is chosen.
+  EtcdRaft:
+    # The set of Raft replicas for this network. For the etcd/raft-based
+    # implementation, we expect every replica to also be an OSN. Therefore,
+    # a subset of the host:port items enumerated in this list should be
+    # replicated under the Orderer.Addresses key above.
+    Consenters:
+      - Host: orderer0.org.bta.kilroy
+        Port: 7050
+        ClientTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer0.org.bta.kilroy/tls/signcerts/cert.pem
+        ServerTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer0.org.bta.kilroy/tls/signcerts/cert.pem
+      - Host: orderer1.org.bta.kilroy
+        Port: 7050
+        ClientTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer1.org.bta.kilroy/tls/signcerts/cert.pem
+        ServerTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer1.org.bta.kilroy/tls/signcerts/cert.pem
+      - Host: orderer2.org.bta.kilroy
+        Port: 7050
+        ClientTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer2.org.bta.kilroy/tls/signcerts/cert.pem
+        ServerTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer2.org.bta.kilroy/tls/signcerts/cert.pem
+
+  # Organizations is the list of orgs which are defined as participants on
+  # the orderer side of the network
+  Organizations:
+
+  # Policies defines the set of policies at this level of the config tree
+  # For Orderer policies, their canonical path is
+  #   /Channel/Orderer/<PolicyName>
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: 'ANY Readers'
+    Writers:
+      Type: ImplicitMeta
+      Rule: 'ANY Writers'
+    Admins:
+      Type: ImplicitMeta
+      Rule: 'MAJORITY Admins'
+    # BlockValidation specifies what signatures must be included in the block
+    # from the orderer for the peer to validate it.
+    BlockValidation:
+      Type: ImplicitMeta
+      Rule: 'ANY Writers'
+
+################################################################################
+#
+#   CHANNEL
+#
+#   This section defines the values to encode into a config transaction or
+#   genesis block for channel related parameters.
+#
+################################################################################
+Channel: &ChannelDefaults
+  # Policies defines the set of policies at this level of the config tree
+  # For Channel policies, their canonical path is
+  #   /Channel/<PolicyName>
+  Policies:
+    # Who may invoke the 'Deliver' API
+    Readers:
+      Type: ImplicitMeta
+      Rule: 'ANY Readers'
+    # Who may invoke the 'Broadcast' API
+    Writers:
+      Type: ImplicitMeta
+      Rule: 'ANY Writers'
+    # By default, who may modify elements at this config level
+    Admins:
+      Type: ImplicitMeta
+      Rule: 'MAJORITY Admins'
+  # Capabilities describes the channel level capabilities, see the
+  # dedicated Capabilities section elsewhere in this file for a full
+  # description
+  Capabilities:
+    <<: *ChannelCapabilities
+
+################################################################################
+#
+#   Profile
+#
+#   - Different configuration profiles may be encoded here to be specified
+#   as parameters to the configtxgen tool
+#
+################################################################################
+Profiles:
+  OrdererBtaKilroyGenesis:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+        - *OrdererBtaKilroy
+      Capabilities:
+        <<: *OrdererCapabilities
+    Consortiums:
+      SampleConsortium:
+        Organizations:
+          - *PeerO1SuperAdminBtaKilroy
+          - *PeerO2AdminBtaKilroy
+          - *PeerO3ShBtaKilroy
+          - *PeerO4MLOpsBtaKilroy
+          - *PeerO5AIEngineerBtaKilroy
+
+  GlobalChannel:
+    Consortium: SampleConsortium
+    <<: *ChannelDefaults
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *PeerO1SuperAdminBtaKilroy
+        - *PeerO2AdminBtaKilroy
+      Capabilities:
+        <<: *ApplicationCapabilities
+
+  C1Channel:
+    Consortium: SampleConsortium
+    <<: *ChannelDefaults
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *PeerO2AdminBtaKilroy
+        - *PeerO3ShBtaKilroy
+        - *PeerO4MLOpsBtaKilroy
+        - *PeerO5AIEngineerBtaKilroy
+      Capabilities:
+        <<: *ApplicationCapabilities
+
+  O5AIEngineerChannel:
+    Consortium: SampleConsortium
+    <<: *ChannelDefaults
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *PeerO5AIEngineerBtaKilroy
+      Capabilities:
+        <<: *ApplicationCapabilities
