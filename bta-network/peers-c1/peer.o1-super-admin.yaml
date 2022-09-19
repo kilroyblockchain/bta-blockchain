@@ -1,0 +1,36 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  peer0.o1-super-admin.bta.kilroy:
+
+networks:
+  bta-bc-network:
+
+services:
+  peer0.o1-super-admin.bta.kilroy:
+    container_name: peer0.o1-super-admin.bta.kilroy
+    extends:
+      file: ../base/base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.o1-super-admin.bta.kilroy
+      - CORE_PEER_ADDRESS=peer0.o1-super-admin.bta.kilroy:$PORT_PEER_INTERNAL
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:$PORT_PEER0_O1_SUPER_ADMIN
+      - CORE_PEER_CHAINCODEADDRESS=peer0.o1-super-admin.bta.kilroy:$PORT_PEER0_O1_SUPER_ADMIN_CHAINCODE
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:$PORT_PEER0_O1_SUPER_ADMIN_CHAINCODE
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.o1-super-admin.bta.kilroy:$PORT_PEER_INTERNAL
+      - CORE_PEER_LOCALMSPID=PeerO1SuperAdminBtaKilroyMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../../bta-ca/crypto-config/peerOrganizations/peer.o1-super-admin.bta.kilroy/peers/peer0.o1-super-admin.bta.kilroy/msp:/etc/hyperledger/fabric/msp
+      - ../../bta-ca/crypto-config/peerOrganizations/peer.o1-super-admin.bta.kilroy/peers/peer0.o1-super-admin.bta.kilroy/tls:/etc/hyperledger/fabric/tls
+      - peer0.o1-super-admin.bta.kilroy:/var/hyperledger/production
+    ports:
+      - $PORT_PEER0_O1_SUPER_ADMIN:$PORT_PEER_INTERNAL
+    networks:
+      - $NETWORK
