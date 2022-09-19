@@ -1,0 +1,28 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+networks:
+  bta-bc-network:
+
+services:
+  ica.o4-mlops.bta.kilroy:
+    image: hyperledger/fabric-ca:$CA_IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server-config
+      - FABRIC_CA_SERVER_CA_NAME=ica.o4-mlops.bta.kilroy
+      - FABRIC_CA_SERVER_PORT=$PORT_ICA_O4_MLOPS
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/tls/cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/tls/key.pem
+    ports:
+      - $PORT_ICA_O4_MLOPS:$PORT_ICA_O4_MLOPS
+    command: sh -c 'fabric-ca-server start -b $ICA_USERNAME_O4_MLOPS:$ICA_PASSWORD_O4_MLOPS -d'
+    volumes:
+      - ../../bta-ca/ica-o4-mlops-bta-kilroy-server/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ica.o4-mlops.bta.kilroy
+    networks:
+      - $NETWORK
