@@ -37,41 +37,43 @@ else
 fi
 
 function addNodeOUPeer(){
-echo "NodeOUs:
-\tEnable: true
-\tClientOUIdentifier:
-\t\tCertificate: intermediatecerts/localhost-7056.pem
-\t\tOrganizationalUnitIdentifier: client
-\tPeerOUIdentifier:
-\t\tCertificate: intermediatecerts/localhost-7056.pem
-\t\tOrganizationalUnitIdentifier: peer
-\tAdminOUIdentifier:
-\t\tCertificate: intermediatecerts/localhost-7056.pem
-\t\tOrganizationalUnitIdentifier: admin
-\tOrdererOUIdentifier:
-\t\tCertificate: intermediatecerts/localhost-7056.pem
-\t\tOrganizationalUnitIdentifier: orderer
-" >> $ROOT_DIR/config.yaml
+{
+  printf 'NodeOUs:'
+  printf "\n  Enable: true"
+  printf "\n  ClientOUIdentifier:"
+  printf "\n    Certificate: intermediatecerts/localhost-7056.pem"
+  printf "\n    OrganizationalUnitIdentifier: client"
+  printf "\n  PeerOUIdentifier:"
+  printf "\n    Certificate: intermediatecerts/localhost-7056.pem"
+  printf "\n    OrganizationalUnitIdentifier: peer"
+  printf "\n  AdminOUIdentifier:"
+  printf "\n    Certificate: intermediatecerts/localhost-7056.pem"
+  printf "\n    OrganizationalUnitIdentifier: admin"
+  printf "\n  OrdererOUIdentifier:"
+  printf "\n    Certificate: intermediatecerts/localhost-7056.pem"
+  printf "\n    OrganizationalUnitIdentifier: orderer"
+} >$ROOT_DIR/config.yaml
 cp $ROOT_DIR/config.yaml $MSP_DIR/msp/config.yaml
 rm $ROOT_DIR/config.yaml
 }
 
 function addNodeOUOrderer(){
-echo "NodeOUs:
-\tEnable: true
-\tClientOUIdentifier:
-\t\tCertificate: cacerts/localhost-7057.pem
-\t\tOrganizationalUnitIdentifier: client
-\tPeerOUIdentifier:
-\t\tCertificate: cacerts/localhost-7057.pem
-\t\tOrganizationalUnitIdentifier: peer
-\tAdminOUIdentifier:
-\t\tCertificate: cacerts/localhost-7057.pem
-\t\tOrganizationalUnitIdentifier: admin
-\tOrdererOUIdentifier:
-\t\tCertificate: cacerts/localhost-7057.pem
-\t\tOrganizationalUnitIdentifier: orderer
-" >> $ROOT_DIR/config.yaml
+{
+  printf 'NodeOUs:'
+  printf "\n  Enable: true"
+  printf "\n  ClientOUIdentifier:"
+  printf "\n    Certificate: cacerts/localhost-7057.pem"
+  printf "\n    OrganizationalUnitIdentifier: client"
+  printf "\n  PeerOUIdentifier:"
+  printf "\n    Certificate: cacerts/localhost-7057.pem"
+  printf "\n    OrganizationalUnitIdentifier: peer"
+  printf "\n  AdminOUIdentifier:"
+  printf "\n    Certificate: cacerts/localhost-7057.pem"
+  printf "\n    OrganizationalUnitIdentifier: admin"
+  printf "\n  OrdererOUIdentifier:"
+  printf "\n    Certificate: cacerts/localhost-7057.pem"
+  printf "\n    OrganizationalUnitIdentifier: orderer"
+} >$ROOT_DIR/config.yaml
 cp $ROOT_DIR/config.yaml $MSP_DIR/msp/config.yaml
 rm $ROOT_DIR/config.yaml
 }
