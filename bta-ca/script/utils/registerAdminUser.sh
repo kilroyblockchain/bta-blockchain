@@ -15,7 +15,7 @@ export FABRIC_CA_CLIENT_HOME=$ROOT_DIR/fabric-ca-client
 
 if [ "$REGISTER_TYPE" == "$REGISTER_TYPE_RCA" ]; then
     set -x
-    $ROOT_DIR/bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
+    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
     res=$?
     { set +x; } 2>/dev/null
     cat log.txt
@@ -27,7 +27,7 @@ if [ "$REGISTER_TYPE" == "$REGISTER_TYPE_RCA" ]; then
     echo "fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR"
 elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_ICA" ]; then
     set -x
-    $ROOT_DIR/bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs '"hf.Registrar.Roles=user,admin","hf.Revoker=true","hf.IntermediateCA=true"' --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
+    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs '"hf.Registrar.Roles=user,admin","hf.Revoker=true","hf.IntermediateCA=true"' --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
     res=$?
     { set +x; } 2>/dev/null
     cat log.txt

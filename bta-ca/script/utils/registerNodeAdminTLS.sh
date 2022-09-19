@@ -19,7 +19,7 @@ REGISTER_USERNAME=$REGISTER_USERNAME-$REGISTER_ORG_NAME-$DOMAIN_NAME
 
 if [ "$REGISTER_TYPE" == "$REGISTER_TYPE_PEER_ADMIN" ]; then
     set -x
-    $ROOT_DIR/bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
+    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
     res=$?
     { set +x; } 2>/dev/null
     cat log.txt
@@ -31,7 +31,7 @@ if [ "$REGISTER_TYPE" == "$REGISTER_TYPE_PEER_ADMIN" ]; then
     echo "fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR"
 elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_ORDERER_ADMIN" ]; then
     set -x
-    $ROOT_DIR/bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
+    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
     res=$?
     { set +x; } 2>/dev/null
     cat log.txt
