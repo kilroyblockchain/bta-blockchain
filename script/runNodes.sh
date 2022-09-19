@@ -13,4 +13,6 @@ BTA_NETWORK_DIR=$ROOT_DIR/bta-network
 # docker-compose -f $BTA_NETWORK_DIR/peers-c1/peer.o1-super-admin.yaml -f $BTA_NETWORK_DIR/peers-c1/peer.o2-admin.yaml up -d
 
 # ORDERER
-docker-compose -f $BTA_NETWORK_DIR/orderer/docker-compose.yaml up -d
+# docker-compose -f $BTA_NETWORK_DIR/orderer/docker-compose.yaml up -d
+
+docker-compose -f $BTA_NETWORK_DIR/cli-c1/docker-compose.yaml up -d
