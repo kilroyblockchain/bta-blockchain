@@ -1,2 +1,5 @@
 bta-ca
 bta-network/crypto-config
+bta-network/channel-artifacts
+
+script/log.txt
