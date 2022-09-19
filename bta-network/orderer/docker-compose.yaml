@@ -1,0 +1,69 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer0.org.bta.kilroy:
+  orderer1.org.bta.kilroy:
+  orderer2.org.bta.kilroy:
+
+networks:
+  bta-bc-network:
+
+services:
+  orderer0.org.bta.kilroy:
+    extends:
+      file: ../base/base.yaml
+      service: orderer-base
+    container_name: orderer0.org.bta.kilroy
+    environment:
+      - ORDERER_GENERAL_LOCALMSPID=OrdererBtaKilroyMSP
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer0.org.bta.kilroy/msp:/var/hyperledger/orderer/msp
+      - ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer0.org.bta.kilroy/tls/:/var/hyperledger/orderer/tls
+      - ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/msp/:/var/hyperledger/orderer/admin/msp
+      - orderer0.org.bta.kilroy:/var/hyperledger/production/orderer
+    ports:
+      - $PORT_ORDERER0:$PORT_ORDERER0
+    networks:
+      - $NETWORK
+
+  orderer1.org.bta.kilroy:
+    extends:
+      file: ../base/base.yaml
+      service: orderer-base
+    container_name: orderer1.org.bta.kilroy
+    environment:
+      - ORDERER_GENERAL_LOCALMSPID=OrdererBtaKilroyMSP
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer1.org.bta.kilroy/msp:/var/hyperledger/orderer/msp
+      - ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer1.org.bta.kilroy/tls/:/var/hyperledger/orderer/tls
+      - ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/msp:/var/hyperledger/orderer/admin/msp
+      - orderer1.org.bta.kilroy:/var/hyperledger/production/orderer
+    ports:
+      - $PORT_ORDERER1:$PORT_ORDERER1
+    networks:
+      - $NETWORK
+
+  orderer2.org.bta.kilroy:
+    extends:
+      file: ../base/base.yaml
+      service: orderer-base
+    container_name: orderer2.org.bta.kilroy
+    environment:
+      - ORDERER_GENERAL_LOCALMSPID=OrdererBtaKilroyMSP
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer2.org.bta.kilroy/msp:/var/hyperledger/orderer/msp
+      - ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer2.org.bta.kilroy/tls/:/var/hyperledger/orderer/tls
+      - ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/msp:/var/hyperledger/orderer/admin/msp
+      - orderer2.org.bta.kilroy:/var/hyperledger/production/orderer
+    ports:
+      - $PORT_ORDERER2:$PORT_ORDERER2
+    networks:
+      - $NETWORK
