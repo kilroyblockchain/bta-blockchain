@@ -1,0 +1,38 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+networks:
+  bta-bc-network:
+
+services:
+  cli.bta.kilroy:
+    container_name: cli.bta.kilroy
+    image: hyperledger/fabric-tools:$CLI_IMAGE_TAG
+    tty: true
+    stdin_open: true
+    environment:
+      - SYS_CHANNEL=$SYS_CHANNEL
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli.bta.kilroy
+      - CORE_PEER_ADDRESS=peer0.o1-super-admin.bta.kilroy:$PORT_PEER0_O1_SUPER_ADMIN
+      - CORE_PEER_LOCALMSPID=PeerO1SuperAdminBtaKilroyMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/peer.o1-super-admin.bta.kilroy/peers/peer0.o1-super-admin.bta.kilroy/tls/signcerts/cert.pem
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/peer.o1-super-admin.bta.kilroy/peers/peer0.o1-super-admin.bta.kilroy/tls/keystore/key.pem
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/peer.o1-super-admin.bta.kilroy/peers/peer0.o1-super-admin.bta.kilroy/tls/tlscacerts/tls-localhost-7054.pem
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/peer.o1-super-admin.bta.kilroy/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../../bta-chaincode:/opt/gopath/src/github.com/chaincode
+      - ../../bta-ca/crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    networks:
+      - $NETWORK
