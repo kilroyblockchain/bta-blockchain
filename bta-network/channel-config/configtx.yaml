@@ -8,7 +8,7 @@ Organizations:
     ID: OrdererBtaKilroyMSP
 
     # MSPDir is the filesystem path which contains the MSP configuration
-    MSPDir: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/msp
+    MSPDir: ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/msp
 
     # Policies defines the set of policies at this level of the config tree
     # For organization policies, their canonical path is usually
@@ -36,7 +36,7 @@ Organizations:
     # ID to load the MSP definition as
     ID: PeerO1SuperAdminBtaKilroyMSP
 
-    MSPDir: ../crypto-config/peerOrganizations/peer.o1-super-admin.bta.kilroy/msp
+    MSPDir: ../../bta-ca/crypto-config/peerOrganizations/peer.o1-super-admin.bta.kilroy/msp
 
     # Policies defines the set of policies at this level of the config tree
     # For organization policies, their canonical path is usually
@@ -71,7 +71,7 @@ Organizations:
     # ID to load the MSP definition as
     ID: PeerO2AdminBtaKilroyMSP
 
-    MSPDir: ../crypto-config/peerOrganizations/peer.o2-admin.bta.kilroy/msp
+    MSPDir: ../../bta-ca/crypto-config/peerOrganizations/peer.o2-admin.bta.kilroy/msp
 
     # Policies defines the set of policies at this level of the config tree
     # For organization policies, their canonical path is usually
@@ -106,7 +106,7 @@ Organizations:
     # ID to load the MSP definition as
     ID: PeerO3ShBtaKilroyMSP
 
-    MSPDir: ../crypto-config/peerOrganizations/peer.o3-sh.bta.kilroy/msp
+    MSPDir: ../../bta-ca/crypto-config/peerOrganizations/peer.o3-sh.bta.kilroy/msp
 
     # Policies defines the set of policies at this level of the config tree
     # For organization policies, their canonical path is usually
@@ -141,7 +141,7 @@ Organizations:
     # ID to load the MSP definition as
     ID: PeerO4MLOpsBtaKilroyMSP
 
-    MSPDir: ../crypto-config/peerOrganizations/peer.o4-mlops.bta.kilroy/msp
+    MSPDir: ../../bta-ca/crypto-config/peerOrganizations/peer.o4-mlops.bta.kilroy/msp
 
     # Policies defines the set of policies at this level of the config tree
     # For organization policies, their canonical path is usually
@@ -176,7 +176,7 @@ Organizations:
     # ID to load the MSP definition as
     ID: PeerO5AIEngineerBtaKilroyMSP
 
-    MSPDir: ../crypto-config/peerOrganizations/peer.o5-ai-engineer.bta.kilroy/msp
+    MSPDir: ../../bta-ca/crypto-config/peerOrganizations/peer.o5-ai-engineer.bta.kilroy/msp
 
     # Policies defines the set of policies at this level of the config tree
     # For organization policies, their canonical path is usually
@@ -289,16 +289,16 @@ Orderer: &OrdererDefaults
     Consenters:
       - Host: orderer0.org.bta.kilroy
         Port: 7050
-        ClientTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer0.org.bta.kilroy/tls/signcerts/cert.pem
-        ServerTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer0.org.bta.kilroy/tls/signcerts/cert.pem
+        ClientTLSCert: ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer0.org.bta.kilroy/tls/signcerts/cert.pem
+        ServerTLSCert: ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer0.org.bta.kilroy/tls/signcerts/cert.pem
       - Host: orderer1.org.bta.kilroy
         Port: 7050
-        ClientTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer1.org.bta.kilroy/tls/signcerts/cert.pem
-        ServerTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer1.org.bta.kilroy/tls/signcerts/cert.pem
+        ClientTLSCert: ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer1.org.bta.kilroy/tls/signcerts/cert.pem
+        ServerTLSCert: ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer1.org.bta.kilroy/tls/signcerts/cert.pem
       - Host: orderer2.org.bta.kilroy
         Port: 7050
-        ClientTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer2.org.bta.kilroy/tls/signcerts/cert.pem
-        ServerTLSCert: ../crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer2.org.bta.kilroy/tls/signcerts/cert.pem
+        ClientTLSCert: ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer2.org.bta.kilroy/tls/signcerts/cert.pem
+        ServerTLSCert: ../../bta-ca/crypto-config/ordererOrganizations/orderer.org.bta.kilroy/orderers/orderer2.org.bta.kilroy/tls/signcerts/cert.pem
 
   # Organizations is the list of orgs which are defined as participants on
   # the orderer side of the network

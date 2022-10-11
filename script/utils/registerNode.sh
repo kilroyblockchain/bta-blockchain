@@ -23,10 +23,10 @@ REGISTER_USERNAME=$REGISTER_USERNAME-$REGISTER_ORG_NAME-$DOMAIN_NAME
 if [ "$REGISTER_TYPE" == "$REGISTER_TYPE_PEER_ADMIN" ]; then
     ID_ATTRIBUTES=""
     set -x
-    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs 'hf.Registrar.Roles=admin,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert'  --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
+    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs 'hf.Registrar.Roles=admin,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert'  --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR
     res=$?
     { set +x; } 2>/dev/null
-    cat log.txt
+
     verifyResult $res "Failed to Register Peer Admin '$REGISTER_USERNAME' "
     successln "---------------------------------------------------------------------------"
     successln "Successfully Registered Peer Admin '$REGISTER_USERNAME' "
@@ -36,10 +36,10 @@ if [ "$REGISTER_TYPE" == "$REGISTER_TYPE_PEER_ADMIN" ]; then
 elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_ORDERER_ADMIN" ]; then
     ID_ATTRIBUTES=""
     set -x
-    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs 'hf.Registrar.Roles=client,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert'  --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
+    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs 'hf.Registrar.Roles=client,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert'  --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR
     res=$?
     { set +x; } 2>/dev/null
-    cat log.txt
+
     verifyResult $res "Failed to Register Orderer Admin '$REGISTER_USERNAME' "
     successln "---------------------------------------------------------------------------"
     successln "Successfully Registered Orderer Admin '$REGISTER_USERNAME' "
@@ -48,10 +48,10 @@ elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_ORDERER_ADMIN" ]; then
     echo "fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs 'hf.Registrar.Roles=client,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert'  --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR"
 elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_PEER" ]; then
     set -x
-    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT  --id.type peer --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
+    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT  --id.type peer --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR
     res=$?
     { set +x; } 2>/dev/null
-    cat log.txt
+
     verifyResult $res "Failed to Register Peer '$REGISTER_USERNAME' "
     successln "---------------------------------------------------------------------------"
     successln "Successfully Registered Peer '$REGISTER_USERNAME' "
@@ -60,10 +60,10 @@ elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_PEER" ]; then
     echo "fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT  --id.type peer --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR"
 elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_ORDERER" ]; then
     set -x
-    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT  --id.type orderer --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR >&log.txt
+    $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT  --id.type orderer --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR
     res=$?
     { set +x; } 2>/dev/null
-    cat log.txt
+
     verifyResult $res "Failed to Register Orderer '$REGISTER_USERNAME' "
     successln "---------------------------------------------------------------------------"
     successln "Successfully Registered Orderer '$REGISTER_USERNAME' "

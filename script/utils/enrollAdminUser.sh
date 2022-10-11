@@ -29,10 +29,10 @@ export FABRIC_CA_CLIENT_HOME=$ROOT_DIR/fabric-ca-client
     if [ "$ENROLLMENT_TYPE" ==  "$ENROLLMENT_TYPE_TLS" ]; then
     echo "INSIDE ***************";
         set -x
-        $ROOT_DIR/../bin/fabric-ca-client enroll -d -u https://$CA_SERVER_USER:$CA_SERVER_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --enrollment.profile tls --csr.hosts $CSR_HOST --mspdir tls-ca/$CA_SERVER_USER/msp >&log.txt
+        $ROOT_DIR/../bin/fabric-ca-client enroll -d -u https://$CA_SERVER_USER:$CA_SERVER_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --enrollment.profile tls --csr.hosts $CSR_HOST --mspdir tls-ca/$CA_SERVER_USER/msp
         res=$?
         { set +x; } 2>/dev/null
-        cat log.txt
+        
         verifyResult $res "Failed to Enroll Admin User '$CA_SERVER_USER' for TLS"
         successln "---------------------------------------------------------------------------"
         successln "Successfully Enrolled Admin User '$CA_SERVER_USER' for TLS"
@@ -43,10 +43,10 @@ export FABRIC_CA_CLIENT_HOME=$ROOT_DIR/fabric-ca-client
         echo "fabric-ca-client enroll -d -u https://$CA_SERVER_USER:$CA_SERVER_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --enrollment.profile tls --csr.hosts $CSR_HOST --mspdir tls-ca/$CA_SERVER_USER/msp"
     else
         set -x
-        $ROOT_DIR/../bin/fabric-ca-client enroll -d -u https://$CA_SERVER_USER:$CA_SERVER_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --csr.hosts $CSR_HOST --mspdir org-ca/$CA_SERVER_USER/msp >&log.txt
+        $ROOT_DIR/../bin/fabric-ca-client enroll -d -u https://$CA_SERVER_USER:$CA_SERVER_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --csr.hosts $CSR_HOST --mspdir org-ca/$CA_SERVER_USER/msp
         res=$?
         { set +x; } 2>/dev/null
-        cat log.txt
+        
         verifyResult $res "Failed to Enroll Admin User '$CA_SERVER_USER' for Organization CA"
         successln "---------------------------------------------------------------------------"
         successln "Successfully Enrolled Admin User '$CA_SERVER_USER' for Organization CA"

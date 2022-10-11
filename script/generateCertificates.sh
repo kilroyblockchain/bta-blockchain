@@ -869,7 +869,3 @@ echo "TLSCA PID: " $pid_tlsca
 kill -9 $pid_oca
 
 kill -9 $pid_tlsca
-
-sleep 2
-
-cp -r $ROOT_DIR/bta-ca/crypto-config $ROOT_DIR/bta-network

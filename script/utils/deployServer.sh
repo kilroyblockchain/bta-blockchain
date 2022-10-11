@@ -24,10 +24,10 @@ deployCA(){
 if [ "$CA_SERVER_TYPE" == "$CA_SERVER_TYPE_TLSCA" ]; then
         echo "TLSCA"
         set -x
-        $ROOT_DIR/../bin/fabric-ca-server init -b $CA_SERVER_USER:$CA_SERVER_PASSWORD >&log.txt
+        $ROOT_DIR/../bin/fabric-ca-server init -b $CA_SERVER_USER:$CA_SERVER_PASSWORD
         res=$?
         { set +x; } 2>/dev/null
-        cat log.txt
+        
         verifyResult $res "Failed to Initilize $CA_SERVER_TYPE '$CA_SERVER_USER' "
         successln "---------------------------------------------------------------------------"
         successln "Successfully Initilized $CA_SERVER_TYPE '$CA_SERVER_USER' "
@@ -39,10 +39,10 @@ if [ "$CA_SERVER_TYPE" == "$CA_SERVER_TYPE_TLSCA" ]; then
         mkdir $ROOT_DIR/$CA_SERVER_NAME/tls
         cp $ROOT_DIR/$CA_CLIENT_DIR/tls-ca/$CA_SERVER_USER/msp/signcerts/cert.pem $ROOT_DIR/$CA_SERVER_NAME/tls && cp $ROOT_DIR/$CA_CLIENT_DIR/tls-ca/$CA_SERVER_USER/msp/keystore/key.pem $ROOT_DIR/$CA_SERVER_NAME/tls
         set -x
-        $ROOT_DIR/../bin/fabric-ca-server init -b $CA_SERVER_USER:$CA_SERVER_PASSWORD >&log.txt
+        $ROOT_DIR/../bin/fabric-ca-server init -b $CA_SERVER_USER:$CA_SERVER_PASSWORD
         res=$?
         { set +x; } 2>/dev/null
-        cat log.txt
+        
         verifyResult $res "Failed to Initilize $CA_SERVER_TYPE '$CA_SERVER_USER' "
         successln "---------------------------------------------------------------------------"
         successln "Successfully Initilized $CA_SERVER_TYPE '$CA_SERVER_USER' "
@@ -55,10 +55,10 @@ if [ "$CA_SERVER_TYPE" == "$CA_SERVER_TYPE_TLSCA" ]; then
         cp $ROOT_DIR/$CA_CLIENT_DIR/tls-ca/$CA_SERVER_USER/msp/signcerts/cert.pem $ROOT_DIR/$CA_SERVER_NAME/tls && cp $ROOT_DIR/$CA_CLIENT_DIR/tls-ca/$CA_SERVER_USER/msp/keystore/key.pem $ROOT_DIR/$CA_SERVER_NAME/tls
         cp $ROOT_DIR/$TLSCA_SERVER_DIR/ca-cert.pem $ROOT_DIR/$CA_SERVER_NAME/tls/tls-ca-cert.pem
         set -x
-        $ROOT_DIR/../bin/fabric-ca-server init -b $CA_SERVER_USER:$CA_SERVER_PASSWORD >&log.txt
+        $ROOT_DIR/../bin/fabric-ca-server init -b $CA_SERVER_USER:$CA_SERVER_PASSWORD
         res=$?
         { set +x; } 2>/dev/null
-        cat log.txt
+        
         verifyResult $res "Failed to Initilize $CA_SERVER_TYPE '$CA_SERVER_USER' "
         successln "---------------------------------------------------------------------------"
         successln "Successfully Initilized $CA_SERVER_TYPE '$CA_SERVER_USER' "

@@ -81,10 +81,10 @@ rm $ROOT_DIR/config.yaml
 if [ "$CA_TYPE" ==  "$CA_TYPE_TLS" ]; then
         ENROLLMENT_USER_NAME=$ENROLLMENT_USER-$ENROLLMENT_ORG_NAME-$DOMAIN_NAME
         set -x
-        $ROOT_DIR/../bin/fabric-ca-client enroll -d -u https://$ENROLLMENT_USER_NAME:$ENROLLMENT_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --enrollment.profile tls --csr.hosts $CSR_HOST --mspdir $MSP_DIR/tls >&log.txt
+        $ROOT_DIR/../bin/fabric-ca-client enroll -d -u https://$ENROLLMENT_USER_NAME:$ENROLLMENT_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --enrollment.profile tls --csr.hosts $CSR_HOST --mspdir $MSP_DIR/tls
         res=$?
         { set +x; } 2>/dev/null
-        cat log.txt
+        
         verifyResult $res "Failed to Enroll $ENROLLMENT_TYPE '$ENROLLMENT_USER_NAME' for TLS CA"
         successln "---------------------------------------------------------------------------"
         successln "Successfully Enrolled $ENROLLMENT_TYPE '$ENROLLMENT_USER_NAME' for TLS CA"
@@ -96,10 +96,10 @@ if [ "$CA_TYPE" ==  "$CA_TYPE_TLS" ]; then
     else
         ENROLLMENT_USER_NAME=$ENROLLMENT_USER-$ENROLLMENT_ORG_NAME-$DOMAIN_NAME
         set -x
-        $ROOT_DIR/../bin/fabric-ca-client enroll -d -u https://$ENROLLMENT_USER_NAME:$ENROLLMENT_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --csr.hosts $CSR_HOST --mspdir $MSP_DIR/msp >&log.txt
+        $ROOT_DIR/../bin/fabric-ca-client enroll -d -u https://$ENROLLMENT_USER_NAME:$ENROLLMENT_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --csr.hosts $CSR_HOST --mspdir $MSP_DIR/msp
         res=$?
         { set +x; } 2>/dev/null
-        cat log.txt
+        
         verifyResult $res "Failed to Enroll $ENROLLMENT_TYPE '$ENROLLMENT_USER_NAME' for Organization CA"
         successln "---------------------------------------------------------------------------"
         successln "Successfully Enrolled $ENROLLMENT_TYPE '$ENROLLMENT_USER_NAME' for Organization CA"
@@ -107,6 +107,11 @@ if [ "$CA_TYPE" ==  "$CA_TYPE_TLS" ]; then
 
         PRIVATE_FILE=$MSP_DIR/msp/keystore
         mv $PRIVATE_FILE/*_sk $PRIVATE_FILE/key.pem
+
+        if [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_ORDERER_ADMIN" ] || [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_PEER_ADMIN" ]; then
+                cp -r $MSP_DIR/tls/tlscacerts $MSP_DIR/msp
+        fi
+
         echo "fabric-ca-client enroll -d -u https://$ENROLLMENT_USER_NAME:$ENROLLMENT_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --csr.hosts $CSR_HOST --mspdir $MSP_DIR/msp"
 
         if [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_ORDERER" ] || [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_ORDERER_ADMIN" ]; then
