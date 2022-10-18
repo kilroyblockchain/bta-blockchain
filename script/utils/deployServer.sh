@@ -1,3 +1,4 @@
+#!/bin/bash
 . utils/envVar.sh
 
 CA_SERVER_NAME=$1
@@ -21,7 +22,7 @@ mkdir $ROOT_DIR/$CA_SERVER_NAME
 cd $ROOT_DIR/$CA_SERVER_NAME
 
 deployCA(){
-if [ "$CA_SERVER_TYPE" == "$CA_SERVER_TYPE_TLSCA" ]; then
+if [ "$CA_SERVER_TYPE" = "$CA_SERVER_TYPE_TLSCA" ]; then
         echo "TLSCA"
         set -x
         $ROOT_DIR/../bin/fabric-ca-server init -b $CA_SERVER_USER:$CA_SERVER_PASSWORD
@@ -34,7 +35,7 @@ if [ "$CA_SERVER_TYPE" == "$CA_SERVER_TYPE_TLSCA" ]; then
         successln "---------------------------------------------------------------------------"
         yq -i '(.tls.enabled = true),(.ca.name = "tls-ca")' fabric-ca-server-config.yaml
         yq -i 'del(.signing.profiles.ca)' fabric-ca-server-config.yaml
-    elif [ "$CA_SERVER_TYPE" == "$CA_SERVER_TYPE_RCA" ]; then
+    elif [ "$CA_SERVER_TYPE" = "$CA_SERVER_TYPE_RCA" ]; then
         echo "RCA"
         mkdir $ROOT_DIR/$CA_SERVER_NAME/tls
         cp $ROOT_DIR/$CA_CLIENT_DIR/tls-ca/$CA_SERVER_USER/msp/signcerts/cert.pem $ROOT_DIR/$CA_SERVER_NAME/tls && cp $ROOT_DIR/$CA_CLIENT_DIR/tls-ca/$CA_SERVER_USER/msp/keystore/key.pem $ROOT_DIR/$CA_SERVER_NAME/tls
@@ -49,7 +50,7 @@ if [ "$CA_SERVER_TYPE" == "$CA_SERVER_TYPE_TLSCA" ]; then
         successln "---------------------------------------------------------------------------"
 
         yq -i '.port = '$CA_SERVER_PORT' | .tls.certfile = "tls/cert.pem" | .tls.keyfile = "tls/key.pem" | .tls.enabled = true | .ca.name = "'$CA_SERVER_USER'" | .operations.listenAddress = "'$OPERATION_LISTEN_ADDRESS'"' fabric-ca-server-config.yaml
-    elif [ "$CA_SERVER_TYPE" == "$CA_SERVER_TYPE_ICA" ]; then
+    elif [ "$CA_SERVER_TYPE" = "$CA_SERVER_TYPE_ICA" ]; then
         echo "ICA"
         mkdir $ROOT_DIR/$CA_SERVER_NAME/tls
         cp $ROOT_DIR/$CA_CLIENT_DIR/tls-ca/$CA_SERVER_USER/msp/signcerts/cert.pem $ROOT_DIR/$CA_SERVER_NAME/tls && cp $ROOT_DIR/$CA_CLIENT_DIR/tls-ca/$CA_SERVER_USER/msp/keystore/key.pem $ROOT_DIR/$CA_SERVER_NAME/tls

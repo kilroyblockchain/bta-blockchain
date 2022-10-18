@@ -1,3 +1,4 @@
+#!/bin/bash
 . utils/envVar.sh
 
 REGISTER_USERNAME=$1
@@ -20,7 +21,7 @@ export FABRIC_CA_CLIENT_HOME=$ROOT_DIR/fabric-ca-client
 
 REGISTER_USERNAME=$REGISTER_USERNAME-$REGISTER_ORG_NAME-$DOMAIN_NAME
 
-if [ "$REGISTER_TYPE" == "$REGISTER_TYPE_PEER_ADMIN" ]; then
+if [ "$REGISTER_TYPE" = "$REGISTER_TYPE_PEER_ADMIN" ]; then
     ID_ATTRIBUTES=""
     set -x
     $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs 'hf.Registrar.Roles=admin,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert'  --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR
@@ -33,7 +34,7 @@ if [ "$REGISTER_TYPE" == "$REGISTER_TYPE_PEER_ADMIN" ]; then
     successln "---------------------------------------------------------------------------"
 
     echo "fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs 'hf.Registrar.Roles=admin,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert'  --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR"
-elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_ORDERER_ADMIN" ]; then
+elif [ "$REGISTER_TYPE" = "$REGISTER_TYPE_ORDERER_ADMIN" ]; then
     ID_ATTRIBUTES=""
     set -x
     $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs 'hf.Registrar.Roles=client,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert'  --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR
@@ -46,7 +47,7 @@ elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_ORDERER_ADMIN" ]; then
     successln "---------------------------------------------------------------------------"
 
     echo "fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT --id.attrs 'hf.Registrar.Roles=client,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert'  --id.type admin --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR"
-elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_PEER" ]; then
+elif [ "$REGISTER_TYPE" = "$REGISTER_TYPE_PEER" ]; then
     set -x
     $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT  --id.type peer --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR
     res=$?
@@ -58,7 +59,7 @@ elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_PEER" ]; then
     successln "---------------------------------------------------------------------------"
 
     echo "fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT  --id.type peer --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR"
-elif [ "$REGISTER_TYPE" == "$REGISTER_TYPE_ORDERER" ]; then
+elif [ "$REGISTER_TYPE" = "$REGISTER_TYPE_ORDERER" ]; then
     set -x
     $ROOT_DIR/../bin/fabric-ca-client register -d --id.name $REGISTER_USERNAME --id.secret $REGISTER_PASSWORD -u https://localhost:$CA_SERVER_PORT  --id.type orderer --tls.certfiles $TLS_ROOT_CERTFILE --mspdir $REGISTRAR_TLSCA_MSP_DIR
     res=$?

@@ -7,27 +7,27 @@ C_BLUE='\033[0;34m'
 C_YELLOW='\033[1;33m'
 
 # println echos string
-function println() {
+println() {
   echo -e "$1"
 }
 
 # errorln echos i red color
-function errorln() {
+errorln() {
   println "${C_RED}${1}${C_RESET}"
 }
 
 # successln echos in green color
-function successln() {
+successln() {
   println "${C_GREEN}${1}${C_RESET}"
 }
 
 # infoln echos in blue color
-function infoln() {
+infoln() {
   println "${C_BLUE}${1}${C_RESET}"
 }
 
 # warnln echos in yellow color
-function warnln() {
+warnln() {
   println "${C_YELLOW}${1}${C_RESET}"
 }
 
@@ -46,8 +46,8 @@ successResult(){
   fi
 }
 
-export -f errorln
-export -f successln
-export -f infoln
-export -f warnln
+export errorln
+export successln
+export infoln
+export warnln
 

@@ -1,4 +1,8 @@
+#!/bin/bash
+
 . utils/envVar.sh
+
+sudo snap install yq
 
 #Color code for shell script
 Red='\033[0;31m'

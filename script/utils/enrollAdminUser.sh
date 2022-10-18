@@ -1,3 +1,4 @@
+#!/bin/bash
 . utils/envVar.sh
 
 CA_SERVER_USER=$1
@@ -14,7 +15,7 @@ ENROLLMENT_TYPE_TLS="TLS"
 
 ROOT_DIR=$PWD/../bta-ca
 
-if [ "$CA_SERVER_TYPE" == "$CA_SERVER_TYPE_TLSCA" ]; then
+if [ "$CA_SERVER_TYPE" = "$CA_SERVER_TYPE_TLSCA" ]; then
     mkdir $ROOT_DIR/fabric-ca-client
     mkdir $ROOT_DIR/fabric-ca-client/tls-root-cert
     cp -r $ROOT_DIR/fabric-ca-server-tls/ca-cert.pem $ROOT_DIR/fabric-ca-client/tls-root-cert/tls-ca-cert.pem
@@ -26,7 +27,7 @@ fi
 cd $ROOT_DIR/fabric-ca-client
 export FABRIC_CA_CLIENT_HOME=$ROOT_DIR/fabric-ca-client
 
-    if [ "$ENROLLMENT_TYPE" ==  "$ENROLLMENT_TYPE_TLS" ]; then
+    if [ "$ENROLLMENT_TYPE" = "$ENROLLMENT_TYPE_TLS" ]; then
     echo "INSIDE ***************";
         set -x
         $ROOT_DIR/../bin/fabric-ca-client enroll -d -u https://$CA_SERVER_USER:$CA_SERVER_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --enrollment.profile tls --csr.hosts $CSR_HOST --mspdir tls-ca/$CA_SERVER_USER/msp
