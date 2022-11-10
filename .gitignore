@@ -4,6 +4,6 @@ bta-network/channel-artifacts
 
 script/log.txt
 
-bta-network/ica/*
+bta-network/ica/*`
 !bta-network/ica/.env
 !bta-network/ica/*.yaml
