@@ -1,3 +1,4 @@
+#!/bin/bash
 . utils/envVar.sh
 
 ENROLLMENT_USER=$1
@@ -24,19 +25,19 @@ cd $ROOT_DIR/fabric-ca-client
 export FABRIC_CA_CLIENT_HOME=$ROOT_DIR/fabric-ca-client
 
 MSP_DIR=""
-if [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_ORDERER_ADMIN" ]; then
+if [ "$ENROLLMENT_TYPE" = "$ENROLLMENT_TYPE_ORDERER_ADMIN" ]; then
         MSP_DIR=$ROOT_DIR/crypto-config/ordererOrganizations/orderer.$ENROLLMENT_ORG_NAME.$DOMAIN_NAME
-elif [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_PEER_ADMIN" ]; then
+elif [ "$ENROLLMENT_TYPE" = "$ENROLLMENT_TYPE_PEER_ADMIN" ]; then
         MSP_DIR=$ROOT_DIR/crypto-config/peerOrganizations/peer.$ENROLLMENT_ORG_NAME.$DOMAIN_NAME
-elif [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_ORDERER" ]; then
+elif [ "$ENROLLMENT_TYPE" = "$ENROLLMENT_TYPE_ORDERER" ]; then
         MSP_DIR=$ROOT_DIR/crypto-config/ordererOrganizations/orderer.$ENROLLMENT_ORG_NAME.$DOMAIN_NAME/orderers/$ENROLLMENT_USER.$ENROLLMENT_ORG_NAME.$DOMAIN_NAME
-elif [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_PEER" ]; then
+elif [ "$ENROLLMENT_TYPE" = "$ENROLLMENT_TYPE_PEER" ]; then
         MSP_DIR=$ROOT_DIR/crypto-config/peerOrganizations/peer.$ENROLLMENT_ORG_NAME.$DOMAIN_NAME/peers/$ENROLLMENT_USER.$ENROLLMENT_ORG_NAME.$DOMAIN_NAME
 else
     echo "Not found"
 fi
 
-function addNodeOUPeer(){
+addNodeOUPeer(){
 {
   printf 'NodeOUs:'
   printf "\n  Enable: true"
@@ -57,7 +58,7 @@ cp $ROOT_DIR/config.yaml $MSP_DIR/msp/config.yaml
 rm $ROOT_DIR/config.yaml
 }
 
-function addNodeOUOrderer(){
+addNodeOUOrderer(){
 {
   printf 'NodeOUs:'
   printf "\n  Enable: true"
@@ -78,7 +79,7 @@ cp $ROOT_DIR/config.yaml $MSP_DIR/msp/config.yaml
 rm $ROOT_DIR/config.yaml
 }
 
-if [ "$CA_TYPE" ==  "$CA_TYPE_TLS" ]; then
+if [ "$CA_TYPE" =  "$CA_TYPE_TLS" ]; then
         ENROLLMENT_USER_NAME=$ENROLLMENT_USER-$ENROLLMENT_ORG_NAME-$DOMAIN_NAME
         set -x
         $ROOT_DIR/../bin/fabric-ca-client enroll -d -u https://$ENROLLMENT_USER_NAME:$ENROLLMENT_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --enrollment.profile tls --csr.hosts $CSR_HOST --mspdir $MSP_DIR/tls
@@ -108,13 +109,13 @@ if [ "$CA_TYPE" ==  "$CA_TYPE_TLS" ]; then
         PRIVATE_FILE=$MSP_DIR/msp/keystore
         mv $PRIVATE_FILE/*_sk $PRIVATE_FILE/key.pem
 
-        if [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_ORDERER_ADMIN" ] || [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_PEER_ADMIN" ]; then
+        if [ "$ENROLLMENT_TYPE" = "$ENROLLMENT_TYPE_ORDERER_ADMIN" ] || [ "$ENROLLMENT_TYPE" = "$ENROLLMENT_TYPE_PEER_ADMIN" ]; then
                 cp -r $MSP_DIR/tls/tlscacerts $MSP_DIR/msp
         fi
 
         echo "fabric-ca-client enroll -d -u https://$ENROLLMENT_USER_NAME:$ENROLLMENT_PASSWORD@localhost:$CA_SERVER_PORT --tls.certfiles $TLS_ROOT_CERTFILE --csr.hosts $CSR_HOST --mspdir $MSP_DIR/msp"
 
-        if [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_ORDERER" ] || [ "$ENROLLMENT_TYPE" == "$ENROLLMENT_TYPE_ORDERER_ADMIN" ]; then
+        if [ "$ENROLLMENT_TYPE" = "$ENROLLMENT_TYPE_ORDERER" ] || [ "$ENROLLMENT_TYPE" = "$ENROLLMENT_TYPE_ORDERER_ADMIN" ]; then
                 addNodeOUOrderer
         else
                 addNodeOUPeer

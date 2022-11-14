@@ -1,5 +1,6 @@
 
 
+#!/bin/bash
 Red='\033[0;31m'
 Green='\033[0;32m'
 Color_Off='\033[0m'
