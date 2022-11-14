@@ -3,12 +3,15 @@ Blockchain Tethered AI
 
 Clear all the nodes
 
+```
 cd script
 
 sh removeCertificates.sh
 sh removeArtifacts.sh
 sh stopNodes.sh
+```
 
+```
 First:
 Generate certificate files:
 sh generateCertificates.sh
@@ -22,7 +25,9 @@ sh generateChannelConfiguration.sh
 Generate anchor peer configuration files inside bta-network/channel-artifacts
 sh generateAnchorPeer.sh
 
+```
 
+```
 Run Nodes
 sh runNodes.sh
 
@@ -34,3 +39,4 @@ sh joinChannels.sh
 
 Add Anchor Peer
 sh addAnchorPeer.sh
+```
