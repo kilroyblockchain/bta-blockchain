@@ -52,7 +52,6 @@ BTA_BC_CONNECTOR_IMAGE=bta-bc-connector-o1-super-admin
 EOF
 
 # Up the docker for o1-super-admin
-docker compose up prod
 
 # Goto bta-bc-connector-o2-admin directory and create .env file
 cd ../$APP_NAME-$BC_CONNECTOR-o2-admin 
@@ -97,9 +96,6 @@ BTA_BC_CONNECTOR_NAME=bta_bc_connector_o3_sh
 BTA_BC_CONNECTOR_IMAGE=bta-bc-connector-o3-sh
 EOF
 
-echo "Docker for bta-bc-connector-o2-admin Starting...."
-docker compose up prod
-echo "Docker for bta-bc-connector-o2-admin started Successfully...."
 
 # Goto bta-bc-connector-o4-mlops directory and create .env file
 cd ../$APP_NAME-$BC_CONNECTOR-o4-mlops
