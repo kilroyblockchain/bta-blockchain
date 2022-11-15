@@ -1,6 +1,6 @@
 #!/bin/bash
-Red='\033[0;31m'
-Green='\033[0;32m'
+BOLD_Green='\033[1;32m'
+BOLD_YELLOW="\033[1;33m"
 Color_Off='\033[0m'
 
 export BC_CONNECTOR=bc-connector
@@ -43,6 +43,7 @@ sudo rm -r $BC_CONNECTOR
 
 
 # Goto bta-bc-connector-01-super-admin directory and create .env file
+echo "======================================================================================================================================================================================================>"
 cd $APP_NAME-$BC_CONNECTOR-o1-super-admim 
 
 echo "Creating .env file for o1-super-admin...."
@@ -57,11 +58,11 @@ sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CO
 echo "Setup completed connection profile for o1-super-admin...."
 
 # Up the docker for o1-super-admin
-echo "============================================================================================================================================================>"
-echo -e "\033[1m${Green}Starting docker for bta_bc_connector_o1-super-admin"
+echo "======================================================================================================================================================================================================>"
+echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o1-super-admin${Color_Off}"
 docker compose up -d prod
-echo -e "\033[1m${Green}Started docker for bta_bc_connector_o1-super-admin Successfully........."
-echo "============================================================================================================================================================>"
+echo -e "${BOLD_Green}Started docker for bta_bc_connector_o1-super-admin Successfully.........${Color_Off}"
+echo "======================================================================================================================================================================================================>"
 
 # Goto bta-bc-connector-o2-admin directory and create .env file
 cd ../$APP_NAME-$BC_CONNECTOR-o2-admin 
@@ -79,11 +80,11 @@ echo "Setup completed connection profile for o2-admin...."
 
 
 # Up the docker for o2-admin
-echo "============================================================================================================================================================>"
-echo -e "\033[1m${Green}Starting docker for bta_bc_connector_o2_admin" 
+echo "======================================================================================================================================================================================================>"
+echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o2_admin" 
 docker compose up -d prod
-echo -e "\033[1m${Green}Started docker for bta_bc_connector_o2_admin Successfully"
-echo "============================================================================================================================================================>"
+echo -e "${BOLD_Green}Started docker for bta_bc_connector_o2_admin Successfully${Color_Off}"
+echo "======================================================================================================================================================================================================>"
 
 
 # Goto bta-bc-connector-o3-sh directory and create .env file
@@ -101,11 +102,11 @@ sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CO
 echo "Setup completed connection profile for o3-sh...."
 
 # Up the docker for o2-admin
-echo "============================================================================================================================================================>"
-echo -e "\033[1m${Green}Starting docker for bta_bc_connector_o3-sh "
+echo "======================================================================================================================================================================================================>"
+echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o3-sh ${Color_Off}"
 docker compose up -d prod
-echo -e "\033[1m${Green}Started docker for bta_bc_connector_o3-sh Successfully"
-echo "============================================================================================================================================================>"
+echo -e "${BOLD_Green}Started docker for bta_bc_connector_o3-sh Successfully${Color_Off}"
+echo "======================================================================================================================================================================================================>"
 
 
 # Goto bta-bc-connector-o4-mlops directory and create .env file
@@ -124,11 +125,11 @@ sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CO
 echo "Setup completed connection profile for o4-mlops...."
 
 # Up the docker for o4-mlops
-echo "============================================================================================================================================================>"
-echo -e "\033[1m${Green}Starting docker for bta_bc_connector_o4-mlops"
+echo "======================================================================================================================================================================================================>"
+echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o4-mlops${Color_Off}"
 docker compose up -d prod
-echo -e "\033[1m${Green}Started docker for bta_bc_connector_o4-mlops Successfully"
-echo "============================================================================================================================================================>"
+echo -e "${BOLD_Green}Started docker for bta_bc_connector_o4-mlops Successfully${Color_Off}"
+echo "======================================================================================================================================================================================================>"
 
 # Goto bta-bc-connector-o5-ai-engineer directory and create .env file
 cd ../$APP_NAME-$BC_CONNECTOR-o5-ai-engineer
@@ -145,11 +146,12 @@ sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CO
 echo "Setup completed connection profile for o5-ai-engineer...."
 
 # Up the docker for o5-ai-engineer
-echo "============================================================================================================================================================>"
-echo -e "\033[1m${Green}Starting docker for bta_bc_connector_o5-ai-engineer"
+echo "======================================================================================================================================================================================================>"
+echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o5-ai-engineer${Color_Off}"
 docker compose up -d prod
-echo -e "\033[1m${Green}Started docker for bta_bc_connector_o5-ai-engineer Successfully"
-echo "============================================================================================================================================================>"
+echo -e "${BOLD_Green}Started docker for bta_bc_connector_o5-ai-engineer Successfully${Color_Off}"
+echo "======================================================================================================================================================================================================>"
 
-
-
+echo ""
+echo -e "${BOLD_YELLOW}Thank You!!!${Color_Off}"
+echo ""
