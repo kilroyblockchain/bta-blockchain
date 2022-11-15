@@ -17,7 +17,7 @@ export AI_ENGINEER_PROFILE=connection-profile-peero5aiengineerbtakilroy.yaml
  # Getting IP Address For Blockchain Network
 export BLOCKCHAIN_NETWORK_IP_ADDRESS=$(ifconfig | grep -E "([0-9]{1,3}\.){3}[0-9]{1,3}" | grep -v 127.0.0.1 | head -1 | awk '{ print $2 }')
 
-# Check bta-bc-connector directory if exits delete else make 
+# Check bta-bc-connector directory if exits delete
 cd ..
 if [ -d "$APP_NAME-$BC_CONNECTOR" ]; 
 then
