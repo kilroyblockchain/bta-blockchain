@@ -1,30 +1,55 @@
+# Development stage
 FROM node:16.13.0 AS development
 
-WORKDIR /usr/src/app
+ARG NODE_ENV=development
+ENV NODE_ENV $NODE_ENV
 
-COPY package*.json ./
+# default to port 3000 for node, and 9229 and 9230 (tests) for debug
+ARG PORT=3000
+ENV PORT $PORT
 
-RUN npm install glob rimraf
+# you'll likely want the latest npm, regardless of node version, for speed and fixes
+# but pin this version for the best stability
+RUN npm i npm@latest -g
 
-RUN npm install --only=development
+# install dependencies first, in a different location for easier app bind mounting for local development
+RUN mkdir /usr/app
+
+WORKDIR /usr/app
+
+COPY package*.* ./
+
+RUN npm install && npm cache clean --force
 
 COPY . .
 
 RUN npm run build
 
+# Production stage
 FROM node:16.13.0 as production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
+ARG UID=1000
+ARG GID=1000
 
-WORKDIR /usr/src/app
+RUN usermod -u $UID node && groupmod -g $GID node
 
-COPY package*.json ./
+ARG PORT=3000
+ENV PORT $PORT
+EXPOSE $PORT
 
-RUN npm install --only=production
+# due to default permissions we have to create the dir with root and change perms
+RUN mkdir /usr/app && chown node:node /usr/app
 
-COPY . .
+WORKDIR /usr/app
 
-COPY --from=development /usr/src/app/dist ./dist
+USER node
 
-CMD ["node", "dist/main"]
+COPY --chown=node:node package*.* ./
+
+RUN npm ci --omit=dev && npm cache clean --force
+
+COPY --chown=node:node --from=development /usr/app/dist ./dist
+
+CMD ["node", "dist/src/main"]
