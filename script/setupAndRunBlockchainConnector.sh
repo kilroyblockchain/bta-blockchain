@@ -12,8 +12,9 @@ export STAKEHOLDER_COONECTION_PROFILE=connection-profile-peero3shbtakilroy.yaml
 export MLOPS_CONNECTION_PROFILE=connection-profile-peero4mlopsbtakilroy.yaml
 export AI_ENGINEER_PROFILE=connection-profile-peero5aiengineerbtakilroy.yaml
 
-
+ # Getting IP Address For Blockchain Network
 export BLOCKCHAIN_NETWORK_IP_ADDRESS=$(ifconfig | grep -E "([0-9]{1,3}\.){3}[0-9]{1,3}" | grep -v 127.0.0.1 | head -1 | awk '{ print $2 }')
+# echo "The Is address: ${BLOCKCHAIN_NETWORK_IP_ADDRESS}"
 
 # Check bta-bc-connector directory if exits delete else make 
 cd ..
@@ -40,7 +41,7 @@ cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-o5-ai-engineer
 sudo rm -r $BC_CONNECTOR
 
 
-Goto bta-bc-connector-01-super-admin directory and create .env file
+# Goto bta-bc-connector-01-super-admin directory and create .env file
 cd $APP_NAME-$BC_CONNECTOR-o1-super-admim 
 
 echo "Creating .env file for o1-super-admin...."
@@ -49,6 +50,9 @@ echo "Created .env file for 01-super-admin...."
 
 echo "Setup connection profile for o1-super-admin...."
 cp -r connection-profile-samples/sample-$SUPER_ADMIN_CONNECTION_PROFILE  $CONNECTION_PROFILE_DIR/$SUPER_ADMIN_CONNECTION_PROFILE
+
+# Set IP Address For Blockchain Network to yaml file
+sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$SUPER_ADMIN_CONNECTION_PROFILE"
 echo "Setup completed connection profile for o1-super-admin...."
 
 # Up the docker for o1-super-admin
@@ -66,6 +70,9 @@ echo "Created .env file for o2-admin...."
 
 echo "Setup connection profile for o2-admin...."
 cp -r connection-profile-samples/sample-$ADMIN_CONNECTION_PROFILE  $CONNECTION_PROFILE_DIR/$ADMIN_CONNECTION_PROFILE
+
+# Set IP Address For Blockchain Network to yaml file
+sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$SUPER_ADMIN_CONNECTION_PROFILE"
 echo "Setup completed connection profile for o2-admin...."
 
 
@@ -84,6 +91,9 @@ echo "Created .env file for o3-sh...."
 
 echo "Setup connection profile for o3-sh...."
 cp -r connection-profile-samples/sample-$STAKEHOLDER_COONECTION_PROFILE  $CONNECTION_PROFILE_DIR/$STAKEHOLDER_COONECTION_PROFILE
+
+# Set IP Address For Blockchain Network to yaml file
+sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$SUPER_ADMIN_CONNECTION_PROFILE"
 echo "Setup completed connection profile for o3-sh...."
 
 # Up the docker for o2-admin
@@ -117,6 +127,9 @@ echo "Created .env file for o5-ai-engineer...."
 
 echo "Setup connection profile for o5-ai-engineer...."
 cp -r connection-profile-samples/sample-$AI_ENGINEER_PROFILE  $CONNECTION_PROFILE_DIR/$AI_ENGINEER_PROFILE
+
+# Set IP Address For Blockchain Network to yaml file
+sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$SUPER_ADMIN_CONNECTION_PROFILE"
 echo "Setup completed connection profile for o5-ai-engineer...."
 
 # Up the docker for o5-ai-engineer
