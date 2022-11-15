@@ -17,8 +17,10 @@ export AI_ENGINEER_PROFILE=connection-profile-peero5aiengineerbtakilroy.yaml
  # Getting IP Address For Blockchain Network
 export BLOCKCHAIN_NETWORK_IP_ADDRESS=$(ifconfig | grep -E "([0-9]{1,3}\.){3}[0-9]{1,3}" | grep -v 127.0.0.1 | head -1 | awk '{ print $2 }')
 
-# Check bta-bc-connector directory if exits delete
+# Go to one step back
 cd ..
+
+# Check bta-bc-connector directory if exits delete
 if [ -d "$APP_NAME-$BC_CONNECTOR" ]; 
 then
     sudo rm -rf $APP_NAME-$BC_CONNECTOR;
@@ -31,6 +33,7 @@ git clone https://bitbucket.org/kilroy/$BC_CONNECTOR.git
 cd $BC_CONNECTOR && sudo rm -r .git 
 mkdir -p $CONNECTION_PROFILE_DIR
 
+# Go to one step back
 cd ..
 
 # Copy all bc-connector according to users
@@ -42,7 +45,7 @@ cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-o5-ai-engineer
 sudo rm -r $BC_CONNECTOR
 
 
-# Goto bta-bc-connector-01-super-admin directory and create .env file
+# Goto bta-bc-connector-01-super-admin directory and setup .env file and setup connection profile
 echo "======================================================================================================================================================================================================>"
 cd $APP_NAME-$BC_CONNECTOR-o1-super-admim 
 
@@ -64,7 +67,7 @@ docker compose up -d prod
 echo -e "${BOLD_Green}Started docker for bta_bc_connector_o1-super-admin Successfully.........${Color_Off}"
 echo "======================================================================================================================================================================================================>"
 
-# Goto bta-bc-connector-o2-admin directory and create .env file
+# Goto bta-bc-connector-o2-admin directory and setup .env file and setup connection profile
 cd ../$APP_NAME-$BC_CONNECTOR-o2-admin 
 
 echo "Creating .env file for o2-admin...."
@@ -78,7 +81,6 @@ cp -r connection-profile-samples/sample-$ADMIN_CONNECTION_PROFILE  $CONNECTION_P
 sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$ADMIN_CONNECTION_PROFILE"
 echo "Setup completed connection profile for o2-admin...."
 
-
 # Up the docker for o2-admin
 echo "======================================================================================================================================================================================================>"
 echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o2_admin" 
@@ -86,8 +88,7 @@ docker compose up -d prod
 echo -e "${BOLD_Green}Started docker for bta_bc_connector_o2_admin Successfully${Color_Off}"
 echo "======================================================================================================================================================================================================>"
 
-
-# Goto bta-bc-connector-o3-sh directory and create .env file
+# Goto bta-bc-connector-o3-sh directory and setup .env file and setup connection profile
 cd ../$APP_NAME-$BC_CONNECTOR-o3-sh
 
 echo "Creating .env file for o3-sh...."
@@ -108,8 +109,7 @@ docker compose up -d prod
 echo -e "${BOLD_Green}Started docker for bta_bc_connector_o3-sh Successfully${Color_Off}"
 echo "======================================================================================================================================================================================================>"
 
-
-# Goto bta-bc-connector-o4-mlops directory and create .env file
+# Goto bta-bc-connector-o4-mlops directory and setup .env file and setup connection profile
 cd ../$APP_NAME-$BC_CONNECTOR-o4-mlops
 
 echo "Creating .env file for o4-mlops...."
@@ -121,7 +121,6 @@ cp -r connection-profile-samples/sample-$MLOPS_CONNECTION_PROFILE  $CONNECTION_P
 
 # Set IP Address For Blockchain Network to yaml file
 sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$MLOPS_CONNECTION_PROFILE"
-
 echo "Setup completed connection profile for o4-mlops...."
 
 # Up the docker for o4-mlops
@@ -131,7 +130,7 @@ docker compose up -d prod
 echo -e "${BOLD_Green}Started docker for bta_bc_connector_o4-mlops Successfully${Color_Off}"
 echo "======================================================================================================================================================================================================>"
 
-# Goto bta-bc-connector-o5-ai-engineer directory and create .env file
+# Goto bta-bc-connector-o5-ai-engineer directory and setup .env file and setup connection profile
 cd ../$APP_NAME-$BC_CONNECTOR-o5-ai-engineer
 
 echo "Creating .env file for o5-ai-engineer...."
