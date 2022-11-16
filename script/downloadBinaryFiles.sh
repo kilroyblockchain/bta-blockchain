@@ -95,10 +95,9 @@ while getopts "h?dsb" opt; do
     esac
 done
 
-if [ "$BINARIES" == "true" ]; then
-    echo
-    echo "Pull Hyperledger Fabric binaries"
-    echo
-    pullBinaries
-    manageBinaryFiles
-fi
+
+echo
+echo "Pull Hyperledger Fabric binaries"
+echo
+pullBinaries
+manageBinaryFiles

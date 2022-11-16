@@ -9,26 +9,41 @@ Color_Off='\033[0m'
 
 which yq
 if [ "$?" -ne 0 ]; then
-    MAC_OS="darwin-amd64s"
+    MAC_OS="darwin-amd64"
     LINUX_OS="linux-amd64"
     ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m |sed 's/x86_64/amd64/g')" |sed 's/darwin-arm64/darwin-amd64/g')
 
     if [ "$ARCH" = "$MAC_OS" ]; then
         HOMEBREW_NO_AUTO_UPDATE=1 brew install yq
     elif [ "$ARCH" = "$LINUX_OS" ]; then
-        sudo add-apt-repository ppa:rmescandon/yq 
-        sudo apt-get install yq
+        wget https://github.com/mikefarah/yq/releases/download/v4.30.4/yq_linux_amd64.tar.gz -O - |  tar xz && sudo mv yq_linux_amd64 /usr/bin/yq
     else
         echo 
         echo -e "${Red}"
         echo "-----------------------------------------------------------------------------------------"
         echo "-----------------------------------------------------------------------------------------"
-        echo "Failed to install yq. Please install yq manually on your device and re-run the script"
+        echo "OS Not Found. Please install yq manually on your device and re-run the script"
         echo "-----------------------------------------------------------------------------------------"
         echo "-----------------------------------------------------------------------------------------"
         echo -e "${Color_Off}"
         exit 1
     fi
+
+    rm -r yq.1
+    rm -r install-man-page.sh
+fi
+
+which yq
+if [ "$?" -ne 0 ]; then
+    echo 
+    echo -e "${Red}"
+    echo "-----------------------------------------------------------------------------------------"
+    echo "-----------------------------------------------------------------------------------------"
+    echo "Failed to install yq. Please install yq manually on your device and re-run the script"
+    echo "-----------------------------------------------------------------------------------------"
+    echo "-----------------------------------------------------------------------------------------"
+    echo -e "${Color_Off}"
+    exit 1
 fi
 
 pid_tlsca=$(lsof -i tcp:7054 | grep fabric-ca | awk '{print $2}')
@@ -895,3 +910,9 @@ echo "TLSCA PID: " $pid_tlsca
 kill -9 $pid_oca
 
 kill -9 $pid_tlsca
+
+sleep 2
+
+successln "---------------------------------------------------------------------------"
+successln "Successfully Generate Certificates"
+successln "---------------------------------------------------------------------------"
