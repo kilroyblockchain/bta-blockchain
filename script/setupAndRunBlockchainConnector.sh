@@ -1,5 +1,6 @@
 #!/bin/bash
 Magenta='\033[0;35m'
+LIGHT_CYAN='\033[0;96m'
 BOLD_Green='\033[1;32m'
 BOLD_YELLOW="\033[1;33m"
 Color_Off='\033[0m'
@@ -69,16 +70,30 @@ cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$AI_ENGINEER
 sudo rm -r $BC_CONNECTOR
 
 
-# Function for setup crypto files for blockchain connector
-function setupCryptoFiles() {
-echo -e "${Magenta}Setting up crypto files of $1 for blockchain connector${Color_Off}"
-cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$1.bta.kilroy $PEER_ORGANIZATION_DIR
-cp -r ../../bta-ca/fabric-ca-client/org-ca/ica-$1-bta-kilroy $CRYPTO_FILES_DIR
-echo -e "${Magenta}Successfully setup crypto files of $1 for blockchain connector${Color_Off}"
+# Function for set up connection profile
+function setupConnectionProfile(){
+echo -e "${LIGHT_CYAN}Setup connection profile for $1....${Color_Off}"
+cp -r connection-profile-samples/sample-$2  $CONNECTION_PROFILE_DIR/$2
+
+# Set IP Address For Blockchain Network to yaml file
+if [ "$ARCH" = "$MAC_OS" ]; 
+then
+    sed -i "" "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$2"
+else 
+    sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$2"
+fi
+echo -e "${LIGHT_CYAN}Setup completed connection profile for $1....${Color_Off}"
+
 }
 
-# Function for set up connection profile
-# Function for set for blockchain network ip
+# Function for setup crypto files for blockchain connector
+function setupCryptoFiles() {
+echo -e "${Magenta}Setting up crypto files of $1 for blockchain connector....${Color_Off}"
+cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$1.bta.kilroy $PEER_ORGANIZATION_DIR
+cp -r ../../bta-ca/fabric-ca-client/org-ca/ica-$1-bta-kilroy $CRYPTO_FILES_DIR
+echo -e "${Magenta}Successfully setup crypto files of $1 for blockchain connector....${Color_Off}"
+}
+
 # Remove non-named image
 
 # Goto bta-bc-connector-o1-super-admin directory and setup .env file and setup connection profile
@@ -89,17 +104,8 @@ echo "Creating .env file for $SUPER_ADMIN...."
 cp -r env-samples/env-$SUPER_ADMIN .env
 echo "Created .env file for $SUPER_ADMIN...."
 
-echo "Setup connection profile for $SUPER_ADMIN...."
-cp -r connection-profile-samples/sample-$SUPER_ADMIN_CONNECTION_PROFILE  $CONNECTION_PROFILE_DIR/$SUPER_ADMIN_CONNECTION_PROFILE
-
-# Set IP Address For Blockchain Network to yaml file
-if [ "$ARCH" = "$MAC_OS" ]; 
-then
-    sed -i "" "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$SUPER_ADMIN_CONNECTION_PROFILE"
-else 
-    sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$SUPER_ADMIN_CONNECTION_PROFILE"
-fi
-echo "Setup completed connection profile for $SUPER_ADMIN...."
+# Setup connection profile for o1-super-admin
+setupConnectionProfile $SUPER_ADMIN $SUPER_ADMIN_CONNECTION_PROFILE
 
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
 setupCryptoFiles $SUPER_ADMIN
@@ -118,17 +124,8 @@ echo "Creating .env file for $ADMIN...."
 cp -r env-samples/env-$ADMIN .env
 echo "Created .env file for $ADMIN...."
 
-echo "Setup connection profile for $ADMIN...."
-cp -r connection-profile-samples/sample-$ADMIN_CONNECTION_PROFILE  $CONNECTION_PROFILE_DIR/$ADMIN_CONNECTION_PROFILE
-
-# Set IP Address For Blockchain Network to yaml file
-if [ "$ARCH" = "$MAC_OS" ]; 
-then
-    sed -i "" "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$ADMIN_CONNECTION_PROFILE"
-else 
-    sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$ADMIN_CONNECTION_PROFILE"
-fi
-echo "Setup completed connection profile for $ADMIN...."
+# Setup connection profile for o2-admin
+setupConnectionProfile $ADMIN $ADMIN_CONNECTION_PROFILE
 
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
 setupCryptoFiles $ADMIN
@@ -147,17 +144,8 @@ echo "Creating .env file for $STAKEHOLDER...."
 cp -r env-samples/env-$STAKEHOLDER .env
 echo "Created .env file for $STAKEHOLDER...."
 
-echo "Setup connection profile for $STAKEHOLDER...."
-cp -r connection-profile-samples/sample-$STAKEHOLDER_COONECTION_PROFILE  $CONNECTION_PROFILE_DIR/$STAKEHOLDER_COONECTION_PROFILE
-
-# Set IP Address For Blockchain Network to yaml file
-if [ "$ARCH" = "$MAC_OS" ]; 
-then
-    sed -i "" "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$STAKEHOLDER_COONECTION_PROFILE"
-else 
-    sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$STAKEHOLDER_COONECTION_PROFILE"
-fi
-echo "Setup completed connection profile for $STAKEHOLDER...."
+# Setup connection profile for o2-admin
+setupConnectionProfile $STAKEHOLDER $STAKEHOLDER_COONECTION_PROFILE
 
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
 setupCryptoFiles $STAKEHOLDER
@@ -169,24 +157,15 @@ docker compose up -d prod
 echo -e "${BOLD_Green}Started docker for bta_bc_connector_$STAKEHOLDER Successfully${Color_Off}"
 echo "======================================================================================================================================================================================================>"
 
-# # Goto bta-bc-connector-o4-mlops directory and setup .env file and setup connection profile
+# Goto bta-bc-connector-o4-mlops directory and setup .env file and setup connection profile
 cd ../$APP_NAME-$BC_CONNECTOR-$MLOPS
 
 echo "Creating .env file for $MLOPS...."
 cp -r env-samples/env-$MLOPS .env
 echo "Created .env file for $MLOPS...."
 
-echo "Setup connection profile for $MLOPS...."
-cp -r connection-profile-samples/sample-$MLOPS_CONNECTION_PROFILE  $CONNECTION_PROFILE_DIR/$MLOPS_CONNECTION_PROFILE
-
-# Set IP Address For Blockchain Network to yaml file
-if [ "$ARCH" = "$MAC_OS" ]; 
-then
-    sed -i "" "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$MLOPS_CONNECTION_PROFILE"
-else 
-    sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$MLOPS_CONNECTION_PROFILE"
-fi
-echo "Setup completed connection profile for $MLOPS...."
+# Setup connection profile for o4-mlops
+setupConnectionProfile $MLOPS $MLOPS_CONNECTION_PROFILE
 
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
 setupCryptoFiles $MLOPS
@@ -205,17 +184,8 @@ echo "Creating .env file for $AI_ENGINEER...."
 cp -r env-samples/env-$AI_ENGINEER .env
 echo "Created .env file for $AI_ENGINEER...."
 
-echo "Setup connection profile for $AI_ENGINEER...."
-cp -r connection-profile-samples/sample-$AI_ENGINEER_PROFILE  $CONNECTION_PROFILE_DIR/$AI_ENGINEER_PROFILE
-
-# Set IP Address For Blockchain Network to yaml file
-if [ "$ARCH" = "$MAC_OS" ]; 
-then
-    sed -i "" "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$AI_ENGINEER_PROFILE"
-else 
-    sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$AI_ENGINEER_PROFILE"
-fi
-echo "Setup completed connection profile for $AI_ENGINEER...."
+# Setup connection profile for o4-mlops
+setupConnectionProfile $AI_ENGINEER $AI_ENGINEER_PROFILE
 
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
 setupCryptoFiles $AI_ENGINEER
