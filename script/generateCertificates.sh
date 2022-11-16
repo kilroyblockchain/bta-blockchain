@@ -7,6 +7,30 @@ Red='\033[0;31m'
 Green='\033[0;32m'
 Color_Off='\033[0m'
 
+which yq
+if [ "$?" -ne 0 ]; then
+    MAC_OS="darwin-amd64s"
+    LINUX_OS="linux-amd64"
+    ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m |sed 's/x86_64/amd64/g')" |sed 's/darwin-arm64/darwin-amd64/g')
+
+    if [ "$ARCH" = "$MAC_OS" ]; then
+        HOMEBREW_NO_AUTO_UPDATE=1 brew install yq
+    elif [ "$ARCH" = "$LINUX_OS" ]; then
+        sudo add-apt-repository ppa:rmescandon/yq 
+        sudo apt-get install yq
+    else
+        echo 
+        echo -e "${Red}"
+        echo "-----------------------------------------------------------------------------------------"
+        echo "-----------------------------------------------------------------------------------------"
+        echo "Failed to install yq. Please install yq manually on your device and re-run the script"
+        echo "-----------------------------------------------------------------------------------------"
+        echo "-----------------------------------------------------------------------------------------"
+        echo -e "${Color_Off}"
+        exit 1
+    fi
+fi
+
 pid_tlsca=$(lsof -i tcp:7054 | grep fabric-ca | awk '{print $2}')
 pid_rca=$(lsof -i tcp:7055 | grep fabric-ca | awk '{print $2}')
 pid_ica=$(lsof -i tcp:7056 | grep fabric-ca | awk '{print $2}')
