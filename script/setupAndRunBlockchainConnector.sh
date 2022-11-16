@@ -70,8 +70,16 @@ sudo rm -r $BC_CONNECTOR
 
 
 # Function for setup crypto files for blockchain connector
+function setupCryptoFiles() {
+echo -e "${Magenta}Setting up crypto files of $1 for blockchain connector${Color_Off}"
+cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$1.bta.kilroy $PEER_ORGANIZATION_DIR
+cp -r ../../bta-ca/fabric-ca-client/org-ca/ica-$1-bta-kilroy $CRYPTO_FILES_DIR
+echo -e "${Magenta}Successfully setup crypto files of $1 for blockchain connector${Color_Off}"
+}
+
 # Function for set up connection profile
 # Function for set for blockchain network ip
+# Remove non-named image
 
 # Goto bta-bc-connector-o1-super-admin directory and setup .env file and setup connection profile
 echo "======================================================================================================================================================================================================>"
@@ -93,12 +101,8 @@ else
 fi
 echo "Setup completed connection profile for $SUPER_ADMIN...."
 
-
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
-echo -e "${Magenta}Setting up crypto files of ${SUPER_ADMIN} for blockchain connector${Color_Off}"
-cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$SUPER_ADMIN.bta.kilroy $PEER_ORGANIZATION_DIR
-cp -r ../../bta-ca/fabric-ca-client/org-ca/ica-$SUPER_ADMIN-bta-kilroy $CRYPTO_FILES_DIR
-echo -e "${Magenta}Successfully setup crypto files of ${SUPER_ADMIN} for blockchain connector${Color_Off}"
+setupCryptoFiles $SUPER_ADMIN
 
 # Up the docker for o1-super-admin
 echo "======================================================================================================================================================================================================>"
@@ -127,10 +131,7 @@ fi
 echo "Setup completed connection profile for $ADMIN...."
 
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
-echo -e "${Magenta}Setting up crypto files of ${ADMIN} for blockchain connector${Color_Off}"
-cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$ADMIN.bta.kilroy $PEER_ORGANIZATION_DIR
-cp -r ../../bta-ca/fabric-ca-client/org-ca/ica-$ADMIN-bta-kilroy $CRYPTO_FILES_DIR
-echo -e "${Magenta}Successfully setup crypto files of ${ADMIN} for blockchain connector${Color_Off}"
+setupCryptoFiles $ADMIN
 
 # Up the docker for o2-admin
 echo "======================================================================================================================================================================================================>"
@@ -159,10 +160,7 @@ fi
 echo "Setup completed connection profile for $STAKEHOLDER...."
 
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
-echo -e "${Magenta}Setting up crypto files of ${STAKEHOLDER} for blockchain connector${Color_Off}"
-cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$STAKEHOLDER.bta.kilroy $PEER_ORGANIZATION_DIR
-cp -r ../../bta-ca/fabric-ca-client/org-ca/ica-$STAKEHOLDER-bta-kilroy $CRYPTO_FILES_DIR
-echo -e "${Magenta}Successfully setup crypto files of ${STAKEHOLDER} for blockchain connector${Color_Off}"
+setupCryptoFiles $STAKEHOLDER
 
 Up the docker for o3-sh
 echo "======================================================================================================================================================================================================>"
@@ -191,10 +189,7 @@ fi
 echo "Setup completed connection profile for $MLOPS...."
 
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
-echo -e "${Magenta}Setting up crypto files of ${MLOPS} for blockchain connector${Color_Off}"
-cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$MLOPS.bta.kilroy $PEER_ORGANIZATION_DIR
-cp -r ../../bta-ca/fabric-ca-client/org-ca/ica-$MLOPS-bta-kilroy $CRYPTO_FILES_DIR
-echo -e "${Magenta}Successfully setup crypto files of ${MLOPS} for blockchain connector${Color_Off}"
+setupCryptoFiles $MLOPS
 
 # Up the docker for o4-mlops
 echo "======================================================================================================================================================================================================>"
@@ -223,10 +218,8 @@ fi
 echo "Setup completed connection profile for $AI_ENGINEER...."
 
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
-echo -e "${Magenta}Setting up crypto files of ${AI_ENGINEER} for blockchain connector${Color_Off}"
-cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$AI_ENGINEER.bta.kilroy $PEER_ORGANIZATION_DIR
-cp -r ../../bta-ca/fabric-ca-client/org-ca/ica-$AI_ENGINEER-bta-kilroy $CRYPTO_FILES_DIR
-echo -e "${Magenta}Successfully setup crypto files of ${AI_ENGINEER} for blockchain connector${Color_Off}"
+setupCryptoFiles $AI_ENGINEER
+
 
 # Up the docker for o5-ai-engineer
 echo "======================================================================================================================================================================================================>"
