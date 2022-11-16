@@ -2,8 +2,6 @@
 
 . utils/envVar.sh
 
-sudo snap install yq
-
 #Color code for shell script
 Red='\033[0;31m'
 Green='\033[0;32m'
