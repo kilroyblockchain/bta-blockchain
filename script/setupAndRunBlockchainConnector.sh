@@ -1,4 +1,5 @@
 #!/bin/bash
+Magenta='\033[0;35m'
 BOLD_Green='\033[1;32m'
 BOLD_YELLOW="\033[1;33m"
 Color_Off='\033[0m'
@@ -6,14 +7,25 @@ Color_Off='\033[0m'
 export BC_CONNECTOR=bc-connector
 export APP_NAME=bta
 
-# connection profile exports
+# Blockchain connector directories exports
 export CONNECTION_PROFILE_DIR=src/blockchain-files/connection-profile
+export CRYPTO_FILES_DIR=src/blockchain-files/crypto-files
+export ORDERER_ORGANIZATION_DIR=$CRYPTO_FILES_DIR/ordererOrganizations
+export PEER_ORGANIZATION_DIR=$CRYPTO_FILES_DIR/peerOrganizations
+
+# connection profile exports
 export SUPER_ADMIN_CONNECTION_PROFILE=connection-profile-peero1superadminbtakilroy.yaml
 export ADMIN_CONNECTION_PROFILE=connection-profile-peero2adminbtakilroy.yaml
 export STAKEHOLDER_COONECTION_PROFILE=connection-profile-peero3shbtakilroy.yaml
 export MLOPS_CONNECTION_PROFILE=connection-profile-peero4mlopsbtakilroy.yaml
 export AI_ENGINEER_PROFILE=connection-profile-peero5aiengineerbtakilroy.yaml
 
+# Blockchain users exports
+export SUPER_ADMIN=o1-super-admin
+export ADMIN=o2-admin
+export STAKEHOLDER=o3-sh
+export MLOPS=o4-mlops
+export AI_ENGINEER=o5-ai-engineer
 
 MAC_OS="darwin-amd64"
 LINUX_OS="linux-amd64"
@@ -36,29 +48,40 @@ mkdir $APP_NAME-$BC_CONNECTOR && cd $APP_NAME-$BC_CONNECTOR
 # Clone the bc-connector repo from bitbucket
 git clone https://bitbucket.org/kilroy/$BC_CONNECTOR.git
 cd $BC_CONNECTOR && sudo rm -r .git 
+
+# Make essential directories for blockchain connector 
 mkdir -p $CONNECTION_PROFILE_DIR
+mkdir -p $ORDERER_ORGANIZATION_DIR
+mkdir -p $PEER_ORGANIZATION_DIR
+
+# Copy orderer organization to blockchain connector
+cp -r ../../bta-ca/crypto-config/ordererOrganizations $ORDERER_ORGANIZATION_DIR
 
 # Go to one step back
 cd ..
 
 # Copy all bc-connector according to users
-cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-o1-super-admim
-cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-o2-admin
-cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-o3-sh
-cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-o4-mlops
-cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-o5-ai-engineer
+cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN
+cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$ADMIN
+cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$STAKEHOLDER
+cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$MLOPS
+cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$AI_ENGINEER
 sudo rm -r $BC_CONNECTOR
 
 
-# Goto bta-bc-connector-01-super-admin directory and setup .env file and setup connection profile
+# Function for setup crypto files for blockchain connector
+# Function for set up connection profile
+# Function for set for blockchain network ip
+
+# Goto bta-bc-connector-o1-super-admin directory and setup .env file and setup connection profile
 echo "======================================================================================================================================================================================================>"
-cd $APP_NAME-$BC_CONNECTOR-o1-super-admim 
+cd $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN 
 
-echo "Creating .env file for o1-super-admin...."
-cp -r env-samples/env-o1-super-admin .env
-echo "Created .env file for 01-super-admin...."
+echo "Creating .env file for $SUPER_ADMIN...."
+cp -r env-samples/env-$SUPER_ADMIN .env
+echo "Created .env file for $SUPER_ADMIN...."
 
-echo "Setup connection profile for o1-super-admin...."
+echo "Setup connection profile for $SUPER_ADMIN...."
 cp -r connection-profile-samples/sample-$SUPER_ADMIN_CONNECTION_PROFILE  $CONNECTION_PROFILE_DIR/$SUPER_ADMIN_CONNECTION_PROFILE
 
 # Set IP Address For Blockchain Network to yaml file
@@ -68,23 +91,29 @@ then
 else 
     sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$SUPER_ADMIN_CONNECTION_PROFILE"
 fi
-echo "Setup completed connection profile for o1-super-admin...."
+echo "Setup completed connection profile for $SUPER_ADMIN...."
+
+
+# Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
+echo -e "${Magenta}Setting up crypto files of ${SUPER_ADMIN} for blockchain connector${Color_Off}"
+cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$SUPER_ADMIN.bta.kilroy $PEER_ORGANIZATION_DIR
+echo -e "${Magenta}Successfully setup crypto files of ${SUPER_ADMIN} for blockchain connector${Color_Off}"
 
 # Up the docker for o1-super-admin
 echo "======================================================================================================================================================================================================>"
-echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o1-super-admin${Color_Off}"
+echo -e "${BOLD_Green}Starting docker for bta_bc_connector_$SUPER_ADMIN${Color_Off}"
 docker compose up -d prod
-echo -e "${BOLD_Green}Started docker for bta_bc_connector_o1-super-admin Successfully.........${Color_Off}"
+echo -e "${BOLD_Green}Started docker for bta_bc_connector_$SUPER_ADMIN Successfully${Color_Off}"
 echo "======================================================================================================================================================================================================>"
 
-# Goto bta-bc-connector-o2-admin directory and setup .env file and setup connection profile
-cd ../$APP_NAME-$BC_CONNECTOR-o2-admin 
+# # Goto bta-bc-connector-o2-admin directory and setup .env file and setup connection profile
+cd ../$APP_NAME-$BC_CONNECTOR-$ADMIN 
 
-echo "Creating .env file for o2-admin...."
-cp -r env-samples/env-o2-admin .env
-echo "Created .env file for o2-admin...."
+echo "Creating .env file for $ADMIN...."
+cp -r env-samples/env-$ADMIN .env
+echo "Created .env file for $ADMIN...."
 
-echo "Setup connection profile for o2-admin...."
+echo "Setup connection profile for $ADMIN...."
 cp -r connection-profile-samples/sample-$ADMIN_CONNECTION_PROFILE  $CONNECTION_PROFILE_DIR/$ADMIN_CONNECTION_PROFILE
 
 # Set IP Address For Blockchain Network to yaml file
@@ -94,23 +123,28 @@ then
 else 
     sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$ADMIN_CONNECTION_PROFILE"
 fi
-echo "Setup completed connection profile for o2-admin...."
+echo "Setup completed connection profile for $ADMIN...."
+
+# Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
+echo -e "${Magenta}Setting up crypto files of ${ADMIN} for blockchain connector${Color_Off}"
+cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$ADMIN.bta.kilroy $PEER_ORGANIZATION_DIR
+echo -e "${Magenta}Successfully setup crypto files of ${ADMIN} for blockchain connector${Color_Off}"
 
 # Up the docker for o2-admin
 echo "======================================================================================================================================================================================================>"
-echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o2_admin" 
+echo -e "${BOLD_Green}Starting docker for bta_bc_connector_$ADMIN${Color_Off}" 
 docker compose up -d prod
-echo -e "${BOLD_Green}Started docker for bta_bc_connector_o2_admin Successfully${Color_Off}"
+echo -e "${BOLD_Green}Started docker for bta_bc_connector_$ADMIN Successfully${Color_Off}"
 echo "======================================================================================================================================================================================================>"
 
 # Goto bta-bc-connector-o3-sh directory and setup .env file and setup connection profile
-cd ../$APP_NAME-$BC_CONNECTOR-o3-sh
+cd ../$APP_NAME-$BC_CONNECTOR-$STAKEHOLDER
 
-echo "Creating .env file for o3-sh...."
-cp -r env-samples/env-o3-sh .env
-echo "Created .env file for o3-sh...."
+echo "Creating .env file for $STAKEHOLDER...."
+cp -r env-samples/env-$STAKEHOLDER .env
+echo "Created .env file for $STAKEHOLDER...."
 
-echo "Setup connection profile for o3-sh...."
+echo "Setup connection profile for $STAKEHOLDER...."
 cp -r connection-profile-samples/sample-$STAKEHOLDER_COONECTION_PROFILE  $CONNECTION_PROFILE_DIR/$STAKEHOLDER_COONECTION_PROFILE
 
 # Set IP Address For Blockchain Network to yaml file
@@ -120,23 +154,28 @@ then
 else 
     sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$STAKEHOLDER_COONECTION_PROFILE"
 fi
-echo "Setup completed connection profile for o3-sh...."
+echo "Setup completed connection profile for $STAKEHOLDER...."
 
-# Up the docker for o2-admin
+# Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
+echo -e "${Magenta}Setting up crypto files of ${STAKEHOLDER} for blockchain connector${Color_Off}"
+cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$STAKEHOLDER.bta.kilroy $PEER_ORGANIZATION_DIR
+echo -e "${Magenta}Successfully setup crypto files of ${STAKEHOLDER} for blockchain connector${Color_Off}"
+
+Up the docker for o3-sh
 echo "======================================================================================================================================================================================================>"
-echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o3-sh ${Color_Off}"
+echo -e "${BOLD_Green}Starting docker for bta_bc_connector_$STAKEHOLDER${Color_Off}"
 docker compose up -d prod
-echo -e "${BOLD_Green}Started docker for bta_bc_connector_o3-sh Successfully${Color_Off}"
+echo -e "${BOLD_Green}Started docker for bta_bc_connector_$STAKEHOLDER Successfully${Color_Off}"
 echo "======================================================================================================================================================================================================>"
 
-# Goto bta-bc-connector-o4-mlops directory and setup .env file and setup connection profile
-cd ../$APP_NAME-$BC_CONNECTOR-o4-mlops
+# # Goto bta-bc-connector-o4-mlops directory and setup .env file and setup connection profile
+cd ../$APP_NAME-$BC_CONNECTOR-$MLOPS
 
-echo "Creating .env file for o4-mlops...."
-cp -r env-samples/env-o4-mlops .env
-echo "Created .env file for o4-mlops...."
+echo "Creating .env file for $MLOPS...."
+cp -r env-samples/env-$MLOPS .env
+echo "Created .env file for $MLOPS...."
 
-echo "Setup connection profile for o4-mlops...."
+echo "Setup connection profile for $MLOPS...."
 cp -r connection-profile-samples/sample-$MLOPS_CONNECTION_PROFILE  $CONNECTION_PROFILE_DIR/$MLOPS_CONNECTION_PROFILE
 
 # Set IP Address For Blockchain Network to yaml file
@@ -146,23 +185,28 @@ then
 else 
     sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$MLOPS_CONNECTION_PROFILE"
 fi
-echo "Setup completed connection profile for o4-mlops...."
+echo "Setup completed connection profile for $MLOPS...."
+
+# Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
+echo -e "${Magenta}Setting up crypto files of ${MLOPS} for blockchain connector${Color_Off}"
+cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$MLOPS.bta.kilroy $PEER_ORGANIZATION_DIR
+echo -e "${Magenta}Successfully setup crypto files of ${MLOPS} for blockchain connector${Color_Off}"
 
 # Up the docker for o4-mlops
 echo "======================================================================================================================================================================================================>"
-echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o4-mlops${Color_Off}"
+echo -e "${BOLD_Green}Starting docker for bta_bc_connector_$MLOPS${Color_Off}"
 docker compose up -d prod
-echo -e "${BOLD_Green}Started docker for bta_bc_connector_o4-mlops Successfully${Color_Off}"
+echo -e "${BOLD_Green}Started docker for bta_bc_connector_$MLOPS Successfully${Color_Off}"
 echo "======================================================================================================================================================================================================>"
 
 # Goto bta-bc-connector-o5-ai-engineer directory and setup .env file and setup connection profile
-cd ../$APP_NAME-$BC_CONNECTOR-o5-ai-engineer
+cd ../$APP_NAME-$BC_CONNECTOR-$AI_ENGINEER
 
-echo "Creating .env file for o5-ai-engineer...."
-cp -r env-samples/env-o5-ai-engineer .env
-echo "Created .env file for o5-ai-engineer...."
+echo "Creating .env file for $AI_ENGINEER...."
+cp -r env-samples/env-$AI_ENGINEER .env
+echo "Created .env file for $AI_ENGINEER...."
 
-echo "Setup connection profile for o5-ai-engineer...."
+echo "Setup connection profile for $AI_ENGINEER...."
 cp -r connection-profile-samples/sample-$AI_ENGINEER_PROFILE  $CONNECTION_PROFILE_DIR/$AI_ENGINEER_PROFILE
 
 # Set IP Address For Blockchain Network to yaml file
@@ -172,13 +216,18 @@ then
 else 
     sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$AI_ENGINEER_PROFILE"
 fi
-echo "Setup completed connection profile for o5-ai-engineer...."
+echo "Setup completed connection profile for $AI_ENGINEER...."
+
+# Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
+echo -e "${Magenta}Setting up crypto files of ${AI_ENGINEER} for blockchain connector${Color_Off}"
+cp -r ../../bta-ca/crypto-config/peerOrganizations/peer.$AI_ENGINEER.bta.kilroy $PEER_ORGANIZATION_DIR
+echo -e "${Magenta}Successfully setup crypto files of ${AI_ENGINEER} for blockchain connector${Color_Off}"
 
 # Up the docker for o5-ai-engineer
 echo "======================================================================================================================================================================================================>"
-echo -e "${BOLD_Green}Starting docker for bta_bc_connector_o5-ai-engineer${Color_Off}"
+echo -e "${BOLD_Green}Starting docker for bta_bc_connector_$AI_ENGINEER${Color_Off}"
 docker compose up -d prod
-echo -e "${BOLD_Green}Started docker for bta_bc_connector_o5-ai-engineer Successfully${Color_Off}"
+echo -e "${BOLD_Green}Started docker for bta_bc_connector_$AI_ENGINEER Successfully${Color_Off}"
 echo "======================================================================================================================================================================================================>"
 
 echo ""
