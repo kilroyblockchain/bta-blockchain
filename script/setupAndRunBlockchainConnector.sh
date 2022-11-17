@@ -3,12 +3,15 @@ Magenta='\033[0;35m'
 LIGHT_CYAN='\033[0;96m'
 GRAY='\033[0;90m'
 BOLD_Green='\033[1;32m'
-BOLD_YELLOW="\033[1;33m"
+Green='\033[0;32m'
+YELLOW="\033[0;33m"
 Red='\033[0;31m'
+BLUE='\033[0;34m'
 Color_Off='\033[0m'
 
 export BC_CONNECTOR=bc-connector
 export APP_NAME=bta
+export NODE_INFO=node-info
 
 # Blockchain connector directories exports
 export CONNECTION_PROFILE_DIR=src/blockchain-files/connection-profile
@@ -30,6 +33,13 @@ export STAKEHOLDER=o3-sh
 export MLOPS=o4-mlops
 export AI_ENGINEER=o5-ai-engineer
 
+# Blockchain node info filenames exports
+export SUPER_ADMIN_BC_NODE_INFO_FILE_NAME=PeerO1SuperAdminBtaKilroy.md
+export ADMIN_BC_NODE_INFO_FILE_NAME=PeerO2AdminBtaKilroy.md
+export STAKEHOLDER_BC_NODE_INFO_FILE_NAME=PeerO3ShBtaKilroy.md
+export MLOPS_BC_NODE_INFO_FILE_NAME=PeerO4MLOpsBtaKilroy.md
+export AI_ENGINEER_BC_NODE_INFO_FILE_NAME=PeerO5AIEngineerBtaKilroy.md
+
 MAC_OS="darwin-amd64"
 LINUX_OS="linux-amd64"
 ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m |sed 's/x86_64/amd64/g')" |sed 's/darwin-arm64/darwin-amd64/g')
@@ -47,6 +57,8 @@ then
 fi
 
 mkdir $APP_NAME-$BC_CONNECTOR && cd $APP_NAME-$BC_CONNECTOR
+
+mkdir -p  $BC_CONNECTOR-$NODE_INFO
  
 # Clone the bc-connector repo from bitbucket
 git clone https://bitbucket.org/kilroy/$BC_CONNECTOR.git
@@ -105,10 +117,10 @@ echo -e "${Magenta}Successfully setup crypto files of $1 for blockchain connecto
 
 # Function for remove docker danling images
 removeDanlingImages(){
-echo -e "${Red}Starting removing docker danling images${Color_Off}"
+echo -e "${YELLOW}Starting removing docker danling images${Color_Off}"
 REMOVE_DANGLING_IMAGES="docker rmi $(docker images -q -f dangling=true)"
 eval $REMOVE_DANGLING_IMAGES
-echo -e "${Red}Successfully removed docker danling images${Color_Off}"
+echo -e "${YELLOW}Successfully removed docker danling images${Color_Off}"
 }
 
 # Function run bc connector on docker  
@@ -122,6 +134,19 @@ removeDanlingImages
 echo -e "${BOLD_Green}Started docker for bta_bc_connector_$1 Successfully${Color_Off}"
 }
 
+# Function sample data of the bc node info of the users
+function generatBcNodeInfoSampleData(){
+echo -e "${BLUE}Generating bc node info sample data of $2${Color_Off}"
+source .env
+cat << EOF > ../$BC_CONNECTOR-$NODE_INFO/$1
+ORG_NAME=$ORG_NAME
+BC_CONNECTOR_NODE_URL=http://localhost:$APP_PORT
+AUTHORIZATION_TOKEN=$AUTHORIZATION_TOKEN
+EOF
+echo -e "${BLUE}Generated bc node info sample data of $2${Color_Off}"
+
+}
+
 echo "======================================================================================================================================================================================================>"
 # Goto bta-bc-connector-o1-super-admin directory and setup .env file and setup connection profile
 cd $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN 
@@ -133,6 +158,9 @@ setupConnectionProfile $SUPER_ADMIN $SUPER_ADMIN_CONNECTION_PROFILE
 setupCryptoFiles $SUPER_ADMIN
 # Up the docker for o1-super-admin
 runBcConnectorOnDocker $SUPER_ADMIN
+# Sample data o1-super-admin on PeerO1SuperAdminBtaKilroy.md file inside the bc-connector-node-info
+generatBcNodeInfoSampleData $SUPER_ADMIN_BC_NODE_INFO_FILE_NAME $SUPER_ADMIN
+
 echo "======================================================================================================================================================================================================>"
 
 # Goto bta-bc-connector-o2-admin directory and setup .env file and setup connection profile
@@ -145,6 +173,8 @@ setupConnectionProfile $ADMIN $ADMIN_CONNECTION_PROFILE
 setupCryptoFiles $ADMIN
 # Up the docker for o2-admin
 runBcConnectorOnDocker $ADMIN
+# Sample data o1-super-admin on PeerO2AdminBtaKilroy.md file inside the bc-connector-node-info
+generatBcNodeInfoSampleData $ADMIN_BC_NODE_INFO_FILE_NAME $ADMIN
 echo "======================================================================================================================================================================================================>"
 
 # Goto bta-bc-connector-o3-sh directory and setup .env file and setup connection profile
@@ -157,6 +187,8 @@ setupConnectionProfile $STAKEHOLDER $STAKEHOLDER_COONECTION_PROFILE
 setupCryptoFiles $STAKEHOLDER
 # Up the docker for o3-sh
 runBcConnectorOnDocker $STAKEHOLDER
+# Sample data o1-super-admin on PeerO3ShBtaKilroy.md file inside the bc-connector-node-info
+generatBcNodeInfoSampleData $STAKEHOLDER_BC_NODE_INFO_FILE_NAME $STAKEHOLDER
 echo "======================================================================================================================================================================================================>"
 
 # Goto bta-bc-connector-o4-mlops directory and setup .env file and setup connection profile
@@ -169,6 +201,8 @@ setupConnectionProfile $MLOPS $MLOPS_CONNECTION_PROFILE
 setupCryptoFiles $MLOPS
 # Up the docker for o4-mlops
 runBcConnectorOnDocker $MLOPS
+# Sample data o1-super-admin on PeerO4MLOpsBtaKilroy.md file inside the bc-connector-node-info
+generatBcNodeInfoSampleData $MLOPS_BC_NODE_INFO_FILE_NAME $MLOPS
 echo "======================================================================================================================================================================================================>"
 
 # Goto bta-bc-connector-o5-ai-engineer directory and setup .env file and setup connection profile
@@ -181,8 +215,16 @@ setupConnectionProfile $AI_ENGINEER $AI_ENGINEER_PROFILE
 setupCryptoFiles $AI_ENGINEER
 # Up the docker for o5-ai-engineer
 runBcConnectorOnDocker $AI_ENGINEER
+# Sample data o1-super-admin on PeerO5AIEngineerBtaKilroy.md file inside the bc-connector-node-info
+generatBcNodeInfoSampleData $AI_ENGINEER_BC_NODE_INFO_FILE_NAME $AI_ENGINEER
 echo "======================================================================================================================================================================================================>"
 
-echo ""
-echo -e "${BOLD_YELLOW}Thank You!!!${Color_Off}"
-echo ""
+echo -e "${Green}"
+echo "---------------------------------------------------"
+echo -e "---------------------------------------------------${Color_Off}"
+echo -e "${BOLD_Green}Successfully deployed all the blockchain connectors${Color_Off}"
+echo -e "${Green}---------------------------------------------------"
+echo "---------------------------------------------------"
+echo -e "${Color_Off}"
+echo -e "${BOLD_Green}Blockchain Connector Node Connections data are saved on the folder:  bta-bc-connector/bc-connector-node-info${Color_Off}"
+echo -e ""
