@@ -2,7 +2,7 @@
 RED='\033[0;31m'
 BLOD_RED='\033[1;31m'
 GREEN='\033[0;32m'
-BLOD_GREEN='\033[0;32m'
+BLOD_GREEN='\033[1;32m'
 Color_Off='\033[0m'
 
 
@@ -37,3 +37,24 @@ echo -e ""
 exit 0 
 fi
 
+# Run oracle connector docker container
+echo -e "${GREEN}"
+echo "---------------------------------------------------"
+echo -e "---------------------------------------------------${Color_Off}"
+echo -e "${BLOD_GREEN}Oracle connector is docker is starting${Color_Off}"
+docker compose up -d dev
+echo -e "${GREEN}"
+echo "---------------------------------------------------"
+echo -e "---------------------------------------------------${Color_Off}"
+echo -e "${BLOD_GREEN}Oracle connector is docker is started successfully${Color_Off}"
+
+# After docker container is up the show the stylish messages :)
+source .env
+echo -e "${GREEN}"
+echo "---------------------------------------------------"
+echo -e "---------------------------------------------------${Color_Off}"
+echo -e "${BLOD_GREEN}Oracle connector is up and running on port $PORT${Color_Off}"
+echo -e "${GREEN}---------------------------------------------------"
+echo "---------------------------------------------------"
+echo -e "${Color_Off}"
+echo -e ""
