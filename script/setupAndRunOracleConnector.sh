@@ -48,7 +48,7 @@ echo "---------------------------------------------------"
 echo -e "---------------------------------------------------${Color_Off}"
 echo -e "${BLOD_GREEN}Oracle connector is docker is started successfully${Color_Off}"
 
-# After docker container is up the show the stylish messages :)
+# After docker container is up the show the success messages
 source .env
 echo -e "${GREEN}"
 echo "---------------------------------------------------"
