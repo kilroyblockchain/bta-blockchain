@@ -9,7 +9,6 @@ Color_Off='\033[0m'
 # Export oracle connector repo name
 export ORACLE_CONNECTOR_REPO=oracle-connector
 
-
 # Function for remove docker danling images
 removeDanlingImages(){
 echo -e "${YELLOW}Starting removing docker danling images${Color_Off}"
@@ -18,10 +17,10 @@ eval $REMOVE_DANGLING_IMAGES
 echo -e "${YELLOW}Successfully removed docker danling images${Color_Off}"
 }
 
-
+#  Go To One Step Back
+cd ..
 
 #  Check the if the user clone the oracle-connector or not
-cd ..
 if [ ! -d "$ORACLE_CONNECTOR_REPO" ];
 then 
 echo -e "${RED}"
@@ -35,8 +34,10 @@ echo -e ""
 exit 0 
 fi
 
-#  Check the if the setup or created .env file or not or is empty or not
+# Go To Oracle connector directory
 cd $ORACLE_CONNECTOR_REPO
+
+#  Check the if the setup or created .env file or not or is empty or not
 if [[ ! -f ".env" ||  ! -s ".env" ]];
 then 
 echo -e "${RED}"
@@ -55,12 +56,12 @@ fi
 echo -e "${GREEN}"
 echo "---------------------------------------------------"
 echo -e "---------------------------------------------------${Color_Off}"
-echo -e "${BLOD_GREEN}Oracle connector is docker is starting${Color_Off}"
+echo -e "${BLOD_GREEN}Starting Docker Container For Oracle Connector${Color_Off}"
 docker compose up -d dev
 echo -e "${GREEN}"
 echo "---------------------------------------------------"
 echo -e "---------------------------------------------------${Color_Off}"
-echo -e "${BLOD_GREEN}Oracle connector is docker is started successfully${Color_Off}"
+echo -e "${BLOD_GREEN}Successfully Started Oracle Connector On Docker Container ${Color_Off}"
 
 # Remove development stage image or unused image of the docker
 removeDanlingImages
