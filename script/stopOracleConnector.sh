@@ -9,7 +9,6 @@ Color_Off='\033[0m'
 # Export oracle connector repo name
 export ORACLE_CONNECTOR_REPO=oracle-connector
 
-
 #  Check the if the user clone the oracle-connector or not
 if [ ! -d "$ORACLE_CONNECTOR_REPO" ];
 then 
