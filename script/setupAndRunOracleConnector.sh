@@ -5,10 +5,12 @@ GREEN='\033[0;32m'
 BLOD_GREEN='\033[1;32m'
 Color_Off='\033[0m'
 
+# Export oracle connector repo name
+export ORACLE_CONNECTOR_REPO=oracle-connector
 
 #  Check the if the user clone the oracle-connector or not
 cd ..
-if [ ! -d "oracle-connector" ];
+if [ ! -d "$ORACLE_CONNECTOR_REPO" ];
 then 
 echo -e "${RED}"
 echo "---------------------------------------------------"
@@ -21,8 +23,8 @@ echo -e ""
 exit 0 
 fi
 
-#  Check the if the setup or created .env file or not
-cd oracle-connector
+#  Check the if the setup or created .env file or not or is empty or not
+cd $ORACLE_CONNECTOR_REPO
 if [[ ! -f ".env" ||  ! -s ".env" ]];
 then 
 echo -e "${RED}"
