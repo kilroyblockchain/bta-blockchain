@@ -3,10 +3,22 @@ RED='\033[0;31m'
 BLOD_RED='\033[1;31m'
 GREEN='\033[0;32m'
 BLOD_GREEN='\033[1;32m'
+YELLOW="\033[0;33m"
 Color_Off='\033[0m'
 
 # Export oracle connector repo name
 export ORACLE_CONNECTOR_REPO=oracle-connector
+
+
+# Function for remove docker danling images
+removeDanlingImages(){
+echo -e "${YELLOW}Starting removing docker danling images${Color_Off}"
+REMOVE_DANGLING_IMAGES="docker rmi $(docker images -q -f dangling=true)"
+eval $REMOVE_DANGLING_IMAGES
+echo -e "${YELLOW}Successfully removed docker danling images${Color_Off}"
+}
+
+
 
 #  Check the if the user clone the oracle-connector or not
 cd ..
@@ -49,6 +61,9 @@ echo -e "${GREEN}"
 echo "---------------------------------------------------"
 echo -e "---------------------------------------------------${Color_Off}"
 echo -e "${BLOD_GREEN}Oracle connector is docker is started successfully${Color_Off}"
+
+# Remove development stage image or unused image of the docker
+removeDanlingImages
 
 # After docker container is up the show the success messages
 source .env
