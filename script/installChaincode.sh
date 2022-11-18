@@ -25,7 +25,7 @@ installGoDependencies(){
 }
    
 packageChaincode(){
-    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode package $CHAINCODE_NAME.tar.gz --path github.com/chaincode/${CHAINCODE_NAME} --lang golang --label ${CHAINCODE_NAME}${CHANNEL_NAME}_1
+    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode package $CHAINCODE_NAME.tar.gz --path github.com/chaincode/${CHAINCODE_NAME} --lang golang --label ${CHAINCODE_NAME}_${CHANNEL_NAME}_1
     res=$?
     { set +x; } 2>/dev/null
     verifyResult $res "Failed to package chaincode $CHAINCODE_NAME"
@@ -103,106 +103,100 @@ commitChaincodeO5AIEngineer(){
 }
 
 installChaincodeC1Channel(){
-    for i in "project" "model-version" "model-experiment" "model-artifact"
-    do
-        echo "CHAINCODE: $i"
-        # ***************O2 ADMIN***************
-        export CHAINCODE_NAME=$i
-        export CHANNEL_NAME=c1-channel
-        export PEER_ADMIN_NAME=peer.o2-admin.bta.kilroy
-        export PEER_NAME=peer0.o2-admin.bta.kilroy
-        export PEER_PORT=7061
-        export PEER_MSPID=PeerO2AdminBtaKilroyMSP
-        installGoDependencies
-        packageChaincode
-        installChaincode
-        checkQueryInstalled
-        approveChaincode
-        checkCommitReadiness
+    # ***************O2 ADMIN***************
+    export CHAINCODE_NAME=$1
+    export CHANNEL_NAME=c1-channel
+    export PEER_ADMIN_NAME=peer.o2-admin.bta.kilroy
+    export PEER_NAME=peer0.o2-admin.bta.kilroy
+    export PEER_PORT=7061
+    export PEER_MSPID=PeerO2AdminBtaKilroyMSP
+    installGoDependencies
+    packageChaincode
+    installChaincode
+    checkQueryInstalled
+    approveChaincode
+    checkCommitReadiness
 
-        # ***************O3 STAKE HOLDER***************
-        export CHAINCODE_NAME=$i
-        export CHANNEL_NAME=c1-channel
-        export PEER_ADMIN_NAME=peer.o3-sh.bta.kilroy
-        export PEER_NAME=peer0.o3-sh.bta.kilroy
-        export PEER_PORT=7071
-        export PEER_MSPID=PeerO3ShBtaKilroyMSP
-        installChaincode
-        checkQueryInstalled
-        approveChaincode
-        checkCommitReadiness
+    # ***************O3 STAKE HOLDER***************
+    export CHAINCODE_NAME=$1
+    export CHANNEL_NAME=c1-channel
+    export PEER_ADMIN_NAME=peer.o3-sh.bta.kilroy
+    export PEER_NAME=peer0.o3-sh.bta.kilroy
+    export PEER_PORT=7071
+    export PEER_MSPID=PeerO3ShBtaKilroyMSP
+    installChaincode
+    checkQueryInstalled
+    approveChaincode
+    checkCommitReadiness
 
-        # ***************O4 MLOPS ENGINEER***************
-        export CHAINCODE_NAME=$i
-        export CHANNEL_NAME=c1-channel
-        export PEER_ADMIN_NAME=peer.o4-mlops.bta.kilroy
-        export PEER_NAME=peer0.o4-mlops.bta.kilroy
-        export PEER_PORT=7081
-        export PEER_MSPID=PeerO4MLOpsBtaKilroyMSP
-        installChaincode
-        checkQueryInstalled
-        approveChaincode
-        checkCommitReadiness
+    # ***************O4 MLOPS ENGINEER***************
+    export CHAINCODE_NAME=$1
+    export CHANNEL_NAME=c1-channel
+    export PEER_ADMIN_NAME=peer.o4-mlops.bta.kilroy
+    export PEER_NAME=peer0.o4-mlops.bta.kilroy
+    export PEER_PORT=7081
+    export PEER_MSPID=PeerO4MLOpsBtaKilroyMSP
+    installChaincode
+    checkQueryInstalled
+    approveChaincode
+    checkCommitReadiness
 
 
-        # ***************O5 AI ENGINEER***************
-        export CHAINCODE_NAME=$i
-        export CHANNEL_NAME=c1-channel
-        export PEER_ADMIN_NAME=peer.o5-ai-engineer.bta.kilroy
-        export PEER_NAME=peer0.o5-ai-engineer.bta.kilroy
-        export PEER_PORT=7091
-        export PEER_MSPID=PeerO5AIEngineerBtaKilroyMSP
+    # ***************O5 AI ENGINEER***************
+    export CHAINCODE_NAME=$1
+    export CHANNEL_NAME=c1-channel
+    export PEER_ADMIN_NAME=peer.o5-ai-engineer.bta.kilroy
+    export PEER_NAME=peer0.o5-ai-engineer.bta.kilroy
+    export PEER_PORT=7091
+    export PEER_MSPID=PeerO5AIEngineerBtaKilroyMSP
 
-        # For commit chaincode need all the organization's tls root cert path
-        export PEER_ADMIN_O2_NAME=peer0.o2-admin.bta.kilroy
-        export PEER_ADMIN_O2_PORT=7061
-        export PEER_ADMIN_O2_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
+    # For commit chaincode need all the organization's tls root cert path
+    export PEER_ADMIN_O2_NAME=peer0.o2-admin.bta.kilroy
+    export PEER_ADMIN_O2_PORT=7061
+    export PEER_ADMIN_O2_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
 
-        export PEER_SH_O3_NAME=peer0.o3-sh.bta.kilroy
-        export PEER_SH_O3_PORT=7071
-        export PEER_SH_O3_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
+    export PEER_SH_O3_NAME=peer0.o3-sh.bta.kilroy
+    export PEER_SH_O3_PORT=7071
+    export PEER_SH_O3_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
 
-        export PEER_MLOPS_O4_NAME=peer0.o4-mlops.bta.kilroy
-        export PEER_MLOPS_O4_PORT=7081
-        export PEER_MLOPS_O4_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
+    export PEER_MLOPS_O4_NAME=peer0.o4-mlops.bta.kilroy
+    export PEER_MLOPS_O4_PORT=7081
+    export PEER_MLOPS_O4_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
 
-        export PEER_AI_ENGINEER_O5_NAME=peer0.o5-ai-engineer.bta.kilroy
-        export PEER_AI_ENGINEER_O5_PORT=7091
-        export PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
-        installChaincode
-        checkQueryInstalled
-        approveChaincode
-        checkCommitReadiness
-        
-        commitChaincode
-    done
+    export PEER_AI_ENGINEER_O5_NAME=peer0.o5-ai-engineer.bta.kilroy
+    export PEER_AI_ENGINEER_O5_PORT=7091
+    export PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
+    installChaincode
+    checkQueryInstalled
+    approveChaincode
+    checkCommitReadiness
+    
+    commitChaincode
 }
 
 installChaincodeO5AIEngineerChannel(){
-    for i in "model-version" "model-experiment" "model-artifact"
-    do
-        echo "CHAINCODE: $i"
+    # ***************O5 AI ENGINEER***************
+    export CHAINCODE_NAME=$1
+    export CHANNEL_NAME=o5-ai-engineer-channel
+    export PEER_ADMIN_NAME=peer.o5-ai-engineer.bta.kilroy
+    export PEER_NAME=peer0.o5-ai-engineer.bta.kilroy
+    export PEER_PORT=7091
+    export PEER_MSPID=PeerO5AIEngineerBtaKilroyMSP
 
-        # ***************O5 AI ENGINEER***************
-        export CHAINCODE_NAME=$i
-        export CHANNEL_NAME=o5-ai-engineer-channel
-        export PEER_ADMIN_NAME=peer.o5-ai-engineer.bta.kilroy
-        export PEER_NAME=peer0.o5-ai-engineer.bta.kilroy
-        export PEER_PORT=7091
-        export PEER_MSPID=PeerO5AIEngineerBtaKilroyMSP
-
-        export PEER_AI_ENGINEER_O5_NAME=peer0.o5-ai-engineer.bta.kilroy
-        export PEER_AI_ENGINEER_O5_PORT=7091
-        export PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
-        installGoDependencies
-        packageChaincode
-        installChaincode
-        checkQueryInstalled
-        approveChaincode
-        checkCommitReadiness
-        commitChaincodeO5AIEngineer
-    done
+    export PEER_AI_ENGINEER_O5_NAME=peer0.o5-ai-engineer.bta.kilroy
+    export PEER_AI_ENGINEER_O5_PORT=7091
+    export PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
+    installGoDependencies
+    packageChaincode
+    installChaincode
+    checkQueryInstalled
+    approveChaincode
+    checkCommitReadiness
+    commitChaincodeO5AIEngineer
 }
 
-installChaincodeC1Channel
-installChaincodeO5AIEngineerChannel
+CHAINCODE_NAME=$1
+
+
+installChaincodeC1Channel $CHAINCODE_NAME
+installChaincodeO5AIEngineerChannel $CHAINCODE_NAME
