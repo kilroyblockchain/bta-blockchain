@@ -39,4 +39,21 @@ sh joinChannels.sh
 
 Add Anchor Peer
 sh addAnchorPeer.sh
+
+Install Chaincode Project
+sh installChaincode.sh project
+
+Install Chaincode Model Version
+sh installChaincode.sh model-version
+
+Install Chaincode Model Review
+sh installChaincode.sh model-review
+
+Install Chaincode Model Experiment
+sh installChaincode.sh model-experiment
+
+Install Chaincode Model Artifact
+sh installChaincode.sh model-artifact
+
+
 ```
