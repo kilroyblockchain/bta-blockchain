@@ -86,9 +86,11 @@ commitChaincode(){
     docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode commit -o ${ORDERER0_NAME}:$ORDERER0_PORT --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --version 1.0 --sequence 1 --tls --cafile $ORDERER_TLS_CA --peerAddresses $PEER_ADMIN_O2_NAME:$PEER_ADMIN_O2_PORT --tlsRootCertFiles $PEER_ADMIN_O2_TLS_ROOTCERT_FILE --peerAddresses $PEER_SH_O3_NAME:$PEER_SH_O3_PORT --tlsRootCertFiles $PEER_SH_O3_TLS_ROOTCERT_FILE --peerAddresses $PEER_MLOPS_O4_NAME:$PEER_MLOPS_O4_PORT --tlsRootCertFiles $PEER_MLOPS_O4_TLS_ROOTCERT_FILE --peerAddresses $PEER_AI_ENGINEER_O5_NAME:$PEER_AI_ENGINEER_O5_PORT --tlsRootCertFiles $PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE
     res=$?
     { set +x; } 2>/dev/null
-    verifyResult $res "Failed to commit chaincode in channel"
+    verifyResult $res "Failed to installed and deployed chaincode ${CHAINCODE_NAME} in channel"
     successln "---------------------------------------------------------------------------"
-    successln "Successfully commit chaincode in channel"
+    successln "---------------------------------------------------------------------------"
+    successln "Successfully installed and deployed ${CHAINCODE_NAME} chaincode"
+    successln "---------------------------------------------------------------------------"
     successln "---------------------------------------------------------------------------"
 }
 
@@ -96,9 +98,11 @@ commitChaincodeO5AIEngineer(){
     docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode commit -o ${ORDERER0_NAME}:$ORDERER0_PORT --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --version 1.0 --sequence 1 --tls --cafile $ORDERER_TLS_CA --peerAddresses $PEER_AI_ENGINEER_O5_NAME:$PEER_AI_ENGINEER_O5_PORT --tlsRootCertFiles $PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE
     res=$?
     { set +x; } 2>/dev/null
-    verifyResult $res "Failed to commit chaincode in channel"
+    verifyResult $res "Failed to installed and deployed chaincode ${CHAINCODE_NAME} in channel"
     successln "---------------------------------------------------------------------------"
-    successln "Successfully commit chaincode in channel"
+    successln "---------------------------------------------------------------------------"
+    successln "Successfully installed and deployed ${CHAINCODE_NAME} chaincode"
+    successln "---------------------------------------------------------------------------"
     successln "---------------------------------------------------------------------------"
 }
 
@@ -200,3 +204,5 @@ CHAINCODE_NAME=$1
 
 installChaincodeC1Channel $CHAINCODE_NAME
 installChaincodeO5AIEngineerChannel $CHAINCODE_NAME
+
+

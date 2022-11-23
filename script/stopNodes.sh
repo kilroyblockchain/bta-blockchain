@@ -1,4 +1,7 @@
 #!/bin/bash
+
+. utils/envVar.sh
+
 Red='\033[0;31m'
 Green='\033[0;32m'
 Color_Off='\033[0m'
@@ -18,3 +21,9 @@ docker-compose -f $BTA_NETWORK_DIR/cli-c1/docker-compose.yaml down --volumes
 sleep 2
 
 docker volume prune -f
+
+successln "----------------------------------------------------------"
+successln "----------------------------------------------------------"
+successln "Successfully stopped and removed all the nodes"
+successln "----------------------------------------------------------"
+successln "----------------------------------------------------------"
