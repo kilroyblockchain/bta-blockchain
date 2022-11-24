@@ -1,7 +1,7 @@
 # bta-blockchain
 Blockchain Tethered AI
 
-Clear all the nodes
+Clear all the nodes and files if there is any.
 
 ```
 cd script
@@ -13,6 +13,9 @@ sh stopNodes.sh
 
 ```
 First:
+Download Necessary Binary files:
+sh downloadBinaryFiles.sh
+
 Generate certificate files:
 sh generateCertificates.sh
 
