@@ -57,7 +57,7 @@ echo -e "${GREEN}"
 echo "---------------------------------------------------"
 echo -e "---------------------------------------------------${Color_Off}"
 echo -e "${BLOD_GREEN}Starting Docker Container For Oracle Connector${Color_Off}"
-docker compose up -d dev
+docker compose up -d prod
 echo -e "${GREEN}"
 echo "---------------------------------------------------"
 echo -e "---------------------------------------------------${Color_Off}"
