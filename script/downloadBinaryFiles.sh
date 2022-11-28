@@ -1,4 +1,7 @@
 #!/bin/bash
+
+. utils/envVar.sh
+
 #
 # Copyright IBM Corp. All Rights Reserved.
 #
@@ -101,3 +104,9 @@ echo "Pull Hyperledger Fabric binaries"
 echo
 pullBinaries
 manageBinaryFiles
+
+successln "----------------------------------------------------------"
+successln "----------------------------------------------------------"
+successln "Successfully downloaded and installed HLF binary files"
+successln "----------------------------------------------------------"
+successln "----------------------------------------------------------"

@@ -2,6 +2,7 @@ bta-ca
 bta-network/crypto-config
 bta-network/channel-artifacts
 bta-bc-connector
+oracle-connector
 
 script/log.txt
 
