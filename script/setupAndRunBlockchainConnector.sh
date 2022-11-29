@@ -140,7 +140,7 @@ echo -e "${BLUE}Generating bc node info sample data of $2${Color_Off}"
 source .env
 cat << EOF > ../$BC_CONNECTOR-$NODE_INFO/$1
 ORG_NAME=$ORG_NAME
-BC_CONNECTOR_NODE_URL=http://localhost:$APP_PORT
+BC_CONNECTOR_NODE_URL=http://$BLOCKCHAIN_NETWORK_IP_ADDRESS:$APP_PORT
 AUTHORIZATION_TOKEN=$AUTHORIZATION_TOKEN
 EOF
 echo -e "${BLUE}Generated bc node info sample data of $2${Color_Off}"
