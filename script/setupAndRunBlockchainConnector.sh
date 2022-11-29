@@ -126,7 +126,7 @@ echo -e "${YELLOW}Successfully removed docker danling images${Color_Off}"
 # Function run bc connector on docker  
 function runBcConnectorOnDocker(){
 echo -e "${BOLD_Green}Starting docker for bta_bc_connector_$1${Color_Off}"
-docker compose up -d prod
+docker compose up -d dev
 
 # Remove development stage image or unused image of the docker
 removeDanlingImages
