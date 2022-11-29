@@ -21,7 +21,7 @@ docker compose -f $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN_CONNECTOR/docker-compose.
 echo -e "${BOLD_Green}Successfully Down The Super Admin Blockchain Connector Container${Color_Off}"
 
 echo -e "${BOLD_YELLOW}Removing Docker Image for Super Admin Blockchain Connector${Color_Off}"
-docker image rm -f $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN_CONNECTOR-prod:1.0.0 
+docker image rm -f $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN_CONNECTOR-dev:1.0.0 
 echo -e "${BOLD_Green}Successfully Removed Image Of The Super Admin Blokchain Connector${Color_Off}"
 
 echo -e "${BOLD_YELLOW}Downing The Super Admin Blockchain Connector Container${Color_Off}"
@@ -29,7 +29,7 @@ docker compose -f $APP_NAME-$BC_CONNECTOR-$ADMIN_CONNECTOR/docker-compose.yaml d
 echo -e "${BOLD_Green}Successfully Down The Super Admin Blockchain Connector Container${Color_Off}"
 
 echo -e "${BOLD_YELLOW}Removing Docker Image for Admin Blockchain Connector${Color_Off}"
-docker image rm -f $APP_NAME-$BC_CONNECTOR-$ADMIN_CONNECTOR-prod:1.0.0 
+docker image rm -f $APP_NAME-$BC_CONNECTOR-$ADMIN_CONNECTOR-dev:1.0.0 
 echo -e "${BOLD_Green}Successfully Removed Image Of The Admin Blokchain Connector${Color_Off}"
 
 echo -e "${BOLD_YELLOW}Downing The Stakeholder Connector Container${Color_Off}"
@@ -37,7 +37,7 @@ docker compose -f $APP_NAME-$BC_CONNECTOR-$STAKEHOLDER_CONNECTOR/docker-compose.
 echo -e "${BOLD_Green}Successfully Down The Stakeholder Connector Container${Color_Off}"
 
 echo -e "${BOLD_YELLOW}Removing Docker Image for The Stakeholder Connector${Color_Off}"
-docker image rm -f $APP_NAME-$BC_CONNECTOR-$STAKEHOLDER_CONNECTOR-prod:1.0.0 
+docker image rm -f $APP_NAME-$BC_CONNECTOR-$STAKEHOLDER_CONNECTOR-dev:1.0.0 
 echo -e "${BOLD_Green}Successfully Removed Image Of The Stakeholder Blokchain Connector${Color_Off}"
 
 echo -e "${BOLD_YELLOW}Downing MLOPS Connector Container${Color_Off}"
@@ -45,7 +45,7 @@ docker compose -f $APP_NAME-$BC_CONNECTOR-$MLOPS_CONNECTOR/docker-compose.yaml d
 echo -e "${BOLD_Green}Successfully Down MLOPS Connector Container${Color_Off}"
 
 echo -e "${BOLD_YELLOW}Removing Docker Image for MLOPS Connector${Color_Off}"
-docker image rm -f $APP_NAME-$BC_CONNECTOR-$MLOPS_CONNECTOR-prod:1.0.0 
+docker image rm -f $APP_NAME-$BC_CONNECTOR-$MLOPS_CONNECTOR-dev:1.0.0 
 echo -e "${BOLD_Green}Successfully Removed Image Of MLOPS Blokchain Connector${Color_Off}"
 
 echo -e "${BOLD_YELLOW}Downing AI Engineer Connector Container${Color_Off}"
@@ -53,7 +53,7 @@ docker compose -f $APP_NAME-$BC_CONNECTOR-$AI_ENGINEER_CONNETOR/docker-compose.y
 echo -e "${BOLD_Green}Successfully Down AI Engineer Connector Container${Color_Off}"
 
 echo -e "${BOLD_YELLOW}Removing Docker Image for AI Engineer Connector${Color_Off}"
-docker image rm -f $APP_NAME-$BC_CONNECTOR-$AI_ENGINEER_CONNETOR-prod:1.0.0 
+docker image rm -f $APP_NAME-$BC_CONNECTOR-$AI_ENGINEER_CONNETOR-dev:1.0.0 
 echo -e "${BOLD_Green}Successfully Removed Image Of AI Engineer Blokchain Connector${Color_Off}"
 
 echo -e "${BOLD_YELLOW}Removing BTA Blockchain Connector directory${Color_Off}"
