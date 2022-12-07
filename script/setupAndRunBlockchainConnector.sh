@@ -90,9 +90,16 @@ mkdir $APP_NAME-$BC_CONNECTOR && cd $APP_NAME-$BC_CONNECTOR
 
 mkdir -p  $BC_CONNECTOR-$NODE_INFO
  
+#  ******************
 # Clone the bc-connector repo from bitbucket
-git clone https://bitbucket.org/kilroy/$BC_CONNECTOR.git
-cd $BC_CONNECTOR && sudo rm -r .git 
+# git clone https://bitbucket.org/kilroy/$BC_CONNECTOR.git
+# cd $BC_CONNECTOR && sudo rm -r .git 
+# *****************
+
+git clone https://bitbucket.org/suraj_thaqurie/bc-connector.git
+cd $BC_CONNECTOR
+git checkout feature/BB-294
+sudo rm -r .git 
 
 # Make essential directories for blockchain connector 
 mkdir -p $CONNECTION_PROFILE_DIR
@@ -127,13 +134,13 @@ echo -e "${LIGHT_CYAN}Setup connection profile for $1....${Color_Off}"
 cp -r connection-profile-samples/sample-$2  $CONNECTION_PROFILE_DIR/$2
 
 # Set IP Address For Blockchain Network to yaml file on connection profile
-if [ "$ARCH" = "$MAC_OS" ]; 
-then
-    sed -i "" "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$2"
-else 
-    sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$2"
-fi
-echo -e "${LIGHT_CYAN}Setup completed connection profile for $1....${Color_Off}"
+# if [ "$ARCH" = "$MAC_OS" ]; 
+# then
+#     sed -i "" "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$2"
+# else 
+#     sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$2"
+# fi
+# echo -e "${LIGHT_CYAN}Setup completed connection profile for $1....${Color_Off}"
 
 }
 
@@ -156,7 +163,8 @@ echo -e "${YELLOW}Successfully removed docker danling images${Color_Off}"
 # Function run bc connector on docker  
 function runBcConnectorOnDocker(){
 echo -e "${BOLD_Green}Starting docker for bta_bc_connector_$1${Color_Off}"
-docker compose up -d dev
+# docker compose up -d dev
+. ./dev-deploy.sh
 
 # Remove development stage image or unused image of the docker
 removeDanlingImages
@@ -170,11 +178,10 @@ echo -e "${BLUE}Generating bc node info sample data of $2${Color_Off}"
 source .env
 cat << EOF > ../$BC_CONNECTOR-$NODE_INFO/$1
 ORG_NAME=$ORG_NAME
-BC_CONNECTOR_NODE_URL=http://$BLOCKCHAIN_NETWORK_IP_ADDRESS:$APP_PORT
+BC_CONNECTOR_NODE_URL=http://$BTA_BC_CONNECTOR_NAME:3000
 AUTHORIZATION_TOKEN=$AUTHORIZATION_TOKEN
 EOF
 echo -e "${BLUE}Generated bc node info sample data of $2${Color_Off}"
-
 }
 
 echo "======================================================================================================================================================================================================>"
@@ -190,7 +197,6 @@ setupCryptoFiles $SUPER_ADMIN
 runBcConnectorOnDocker $SUPER_ADMIN
 # Sample data o1-super-admin on PeerO1SuperAdminBtaKilroy.md file inside the bc-connector-node-info
 generatBcNodeInfoSampleData $SUPER_ADMIN_BC_NODE_INFO_FILE_NAME $SUPER_ADMIN
-
 echo "======================================================================================================================================================================================================>"
 
 # Goto bta-bc-connector-o2-admin directory and setup .env file and setup connection profile
@@ -215,7 +221,7 @@ setupDotEnv $STAKEHOLDER
 setupConnectionProfile $STAKEHOLDER $STAKEHOLDER_COONECTION_PROFILE
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
 setupCryptoFiles $STAKEHOLDER
-# Up the docker for o3-sh
+Up the docker for o3-sh
 runBcConnectorOnDocker $STAKEHOLDER
 # Sample data o1-super-admin on PeerO3ShBtaKilroy.md file inside the bc-connector-node-info
 generatBcNodeInfoSampleData $STAKEHOLDER_BC_NODE_INFO_FILE_NAME $STAKEHOLDER
