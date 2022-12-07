@@ -87,7 +87,6 @@ then
 fi
 
 mkdir $APP_NAME-$BC_CONNECTOR && cd $APP_NAME-$BC_CONNECTOR
-
 mkdir -p  $BC_CONNECTOR-$NODE_INFO
  
 #  ******************
