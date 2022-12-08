@@ -214,6 +214,8 @@ runBcConnectorOnDocker $AI_ENGINEER
 # Sample data o1-super-admin on PeerO5AIEngineerBtaKilroy.md file inside the bc-connector-node-info
 generatBcNodeInfoSampleData $AI_ENGINEER_BC_NODE_INFO_FILE_NAME $AI_ENGINEER
 echo "======================================================================================================================================================================================================>"
+fi
+
 
 echo -e "${Green}"
 echo "---------------------------------------------------"
@@ -224,4 +226,3 @@ echo "---------------------------------------------------"
 echo -e "${Color_Off}"
 echo -e "${BOLD_Green}Blockchain Connector Node Connections data are saved on the folder:  bta-bc-connector/bc-connector-node-info${Color_Off}"
 echo -e ""
-fi
