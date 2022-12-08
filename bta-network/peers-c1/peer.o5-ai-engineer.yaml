@@ -9,7 +9,7 @@ volumes:
   peer0.o5-ai-engineer.bta.kilroy:
 
 networks:
-  bta-bc-network:
+  bta-network:
 
 services:
   peer0.o5-ai-engineer.bta.kilroy:

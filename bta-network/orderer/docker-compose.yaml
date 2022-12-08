@@ -11,7 +11,7 @@ volumes:
   orderer2.org.bta.kilroy:
 
 networks:
-  bta-bc-network:
+  bta-network:
 
 services:
   orderer0.org.bta.kilroy:
