@@ -44,38 +44,6 @@ export AI_ENGINEER_BC_NODE_INFO_FILE_NAME=PeerO5AIEngineerBtaKilroy.md
 # Go to one step back
 cd ..
 
-# Check bta-bc-connector directory if exits delete
-if [ -d "$APP_NAME-$BC_CONNECTOR" ]; 
-then
-    sudo rm -rf $APP_NAME-$BC_CONNECTOR;  
-fi
-
-mkdir $APP_NAME-$BC_CONNECTOR && cd $APP_NAME-$BC_CONNECTOR
-mkdir -p  $BC_CONNECTOR-$NODE_INFO
- 
-# Clone the bc-connector repo from bitbucket
-git clone https://bitbucket.org/kilroy/$BC_CONNECTOR.git
-cd $BC_CONNECTOR 
-git checkout dev
-
-# Make essential directories for blockchain connector 
-mkdir -p $CONNECTION_PROFILE_DIR
-mkdir -p $ORDERER_ORGANIZATION_DIR
-mkdir -p $PEER_ORGANIZATION_DIR
-
-# Copy orderer organization to blockchain connector
-cp -r ../../bta-ca/crypto-config/ordererOrganizations $ORDERER_ORGANIZATION_DIR
-
-# Go to one step back
-cd ..
-
-# Copy all bc-connector according to users
-cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN
-cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$ADMIN
-cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$STAKEHOLDER
-cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$MLOPS
-mv $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$AI_ENGINEER
-
 
 # Function for setup the .env file for each bc connector
 function setupDotEnv(){
@@ -129,6 +97,53 @@ AUTHORIZATION_TOKEN=$AUTHORIZATION_TOKEN
 EOF
 echo -e "${BLUE}Generated bc node info sample data of $2${Color_Off}"
 }
+
+# Check bta-bc-connector directory if exits delete
+if [ -d "$APP_NAME-$BC_CONNECTOR" ]; 
+then
+    cd $APP_NAME-$BC_CONNECTOR
+    cd $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN 
+    runBcConnectorOnDocker $SUPER_ADMIN
+
+    cd ../$APP_NAME-$BC_CONNECTOR-$ADMIN 
+    runBcConnectorOnDocker $ADMIN
+
+    cd ../$APP_NAME-$BC_CONNECTOR-$STAKEHOLDER
+    runBcConnectorOnDocker $STAKEHOLDER
+
+    cd ../$APP_NAME-$BC_CONNECTOR-$MLOPS
+    runBcConnectorOnDocker $MLOPS
+
+    cd ../$APP_NAME-$BC_CONNECTOR-$AI_ENGINEER
+    runBcConnectorOnDocker $AI_ENGINEER
+else
+
+mkdir $APP_NAME-$BC_CONNECTOR && cd $APP_NAME-$BC_CONNECTOR
+mkdir -p  $BC_CONNECTOR-$NODE_INFO
+ 
+# Clone the bc-connector repo from bitbucket
+git clone https://bitbucket.org/kilroy/$BC_CONNECTOR.git
+cd $BC_CONNECTOR 
+git checkout dev
+
+# Make essential directories for blockchain connector 
+mkdir -p $CONNECTION_PROFILE_DIR
+mkdir -p $ORDERER_ORGANIZATION_DIR
+mkdir -p $PEER_ORGANIZATION_DIR
+
+# Copy orderer organization to blockchain connector
+cp -r ../../bta-ca/crypto-config/ordererOrganizations $ORDERER_ORGANIZATION_DIR
+
+# Go to one step back
+cd ..
+
+# Copy all bc-connector according to users
+cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN
+cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$ADMIN
+cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$STAKEHOLDER
+cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$MLOPS
+mv $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$AI_ENGINEER
+
 
 echo "======================================================================================================================================================================================================>"
 # Goto bta-bc-connector-o1-super-admin directory and setup .env file and setup connection profile
@@ -210,3 +225,4 @@ echo "---------------------------------------------------"
 echo -e "${Color_Off}"
 echo -e "${BOLD_Green}Blockchain Connector Node Connections data are saved on the folder:  bta-bc-connector/bc-connector-node-info${Color_Off}"
 echo -e ""
+fi
