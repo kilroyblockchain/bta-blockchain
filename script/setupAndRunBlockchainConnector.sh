@@ -40,42 +40,6 @@ export STAKEHOLDER_BC_NODE_INFO_FILE_NAME=PeerO3ShBtaKilroy.md
 export MLOPS_BC_NODE_INFO_FILE_NAME=PeerO4MLOpsBtaKilroy.md
 export AI_ENGINEER_BC_NODE_INFO_FILE_NAME=PeerO5AIEngineerBtaKilroy.md
 
-MAC_OS="darwin-amd64"
-LINUX_OS="linux-amd64"
-ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m |sed 's/x86_64/amd64/g')" |sed 's/darwin-arm64/darwin-amd64/g')
-
-which ifconfig
-if [ "$?" -ne 0 ]; then
-    if [ "$ARCH" = "$LINUX_OS" ]; then
-        sudo apt-get update && sudo apt-get install net-tools
-    else
-        echo 
-        echo -e "${Red}"
-        echo "-----------------------------------------------------------------------------------------"
-        echo "-----------------------------------------------------------------------------------------"
-        echo "OS Not Found. Please install ifconfig manually on your device and re-run the script"
-        echo "-----------------------------------------------------------------------------------------"
-        echo "-----------------------------------------------------------------------------------------"
-        echo -e "${Color_Off}"
-        exit 1
-    fi
-fi
-
-which ifconfig
-if [ "$?" -ne 0 ]; then
-    echo 
-    echo -e "${Red}"
-    echo "-----------------------------------------------------------------------------------------"
-    echo "-----------------------------------------------------------------------------------------"
-    echo "Failed to install ifconfig. Please install ifconfig manually on your device and re-run the script"
-    echo "-----------------------------------------------------------------------------------------"
-    echo "-----------------------------------------------------------------------------------------"
-    echo -e "${Color_Off}"
-    exit 1
-fi
-
-# Getting IP Address For Blockchain Network
-export BLOCKCHAIN_NETWORK_IP_ADDRESS=$(ifconfig | grep -E "([0-9]{1,3}\.){3}[0-9]{1,3}" | grep -v 127.0.0.1 | tail -1 | awk '{ print $2 }')
 
 # Go to one step back
 cd ..
@@ -83,22 +47,16 @@ cd ..
 # Check bta-bc-connector directory if exits delete
 if [ -d "$APP_NAME-$BC_CONNECTOR" ]; 
 then
-    sudo rm -rf $APP_NAME-$BC_CONNECTOR;
+    sudo rm -rf $APP_NAME-$BC_CONNECTOR;  
 fi
 
 mkdir $APP_NAME-$BC_CONNECTOR && cd $APP_NAME-$BC_CONNECTOR
 mkdir -p  $BC_CONNECTOR-$NODE_INFO
  
-#  ******************
 # Clone the bc-connector repo from bitbucket
-# git clone https://bitbucket.org/kilroy/$BC_CONNECTOR.git
-# cd $BC_CONNECTOR && sudo rm -r .git 
-# *****************
-
-git clone https://bitbucket.org/suraj_thaqurie/bc-connector.git
-cd $BC_CONNECTOR
-git checkout feature/BB-294
-sudo rm -r .git 
+git clone https://bitbucket.org/kilroy/$BC_CONNECTOR.git
+cd $BC_CONNECTOR 
+git checkout dev
 
 # Make essential directories for blockchain connector 
 mkdir -p $CONNECTION_PROFILE_DIR
@@ -116,8 +74,7 @@ cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN
 cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$ADMIN
 cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$STAKEHOLDER
 cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$MLOPS
-cp -r $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$AI_ENGINEER
-sudo rm -r $BC_CONNECTOR
+mv $BC_CONNECTOR $APP_NAME-$BC_CONNECTOR-$AI_ENGINEER
 
 
 # Function for setup the .env file for each bc connector
@@ -131,16 +88,6 @@ echo -e "${GRAY}Created .env file for $1....${Color_Off}"
 function setupConnectionProfile(){
 echo -e "${LIGHT_CYAN}Setup connection profile for $1....${Color_Off}"
 cp -r connection-profile-samples/sample-$2  $CONNECTION_PROFILE_DIR/$2
-
-# Set IP Address For Blockchain Network to yaml file on connection profile
-# if [ "$ARCH" = "$MAC_OS" ]; 
-# then
-#     sed -i "" "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$2"
-# else 
-#     sed -i "s/BLOCKCHAIN_NETWORK_IP_ADDRESS/${BLOCKCHAIN_NETWORK_IP_ADDRESS}/g" "$CONNECTION_PROFILE_DIR/$2"
-# fi
-# echo -e "${LIGHT_CYAN}Setup completed connection profile for $1....${Color_Off}"
-
 }
 
 # Function for setup crypto files for blockchain connector
@@ -220,7 +167,7 @@ setupDotEnv $STAKEHOLDER
 setupConnectionProfile $STAKEHOLDER $STAKEHOLDER_COONECTION_PROFILE
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
 setupCryptoFiles $STAKEHOLDER
-Up the docker for o3-sh
+# Up the docker for o3-sh
 runBcConnectorOnDocker $STAKEHOLDER
 # Sample data o1-super-admin on PeerO3ShBtaKilroy.md file inside the bc-connector-node-info
 generatBcNodeInfoSampleData $STAKEHOLDER_BC_NODE_INFO_FILE_NAME $STAKEHOLDER
