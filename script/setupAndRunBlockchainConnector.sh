@@ -22,7 +22,7 @@ export PEER_ORGANIZATION_DIR=$CRYPTO_FILES_DIR/peerOrganizations
 # connection profile exports
 export SUPER_ADMIN_CONNECTION_PROFILE=connection-profile-peero1superadminbtakilroy.yaml
 export ADMIN_CONNECTION_PROFILE=connection-profile-peero2adminbtakilroy.yaml
-export STAKEHOLDER_COONECTION_PROFILE=connection-profile-peero3shbtakilroy.yaml
+export STAKEHOLDER_CONNECTION_PROFILE=connection-profile-peero3shbtakilroy.yaml
 export MLOPS_CONNECTION_PROFILE=connection-profile-peero4mlopsbtakilroy.yaml
 export AI_ENGINEER_PROFILE=connection-profile-peero5aiengineerbtakilroy.yaml
 
@@ -103,18 +103,23 @@ if [ -d "$APP_NAME-$BC_CONNECTOR" ];
 then
     cd $APP_NAME-$BC_CONNECTOR
     cd $APP_NAME-$BC_CONNECTOR-$SUPER_ADMIN 
+    generatBcNodeInfoSampleData $SUPER_ADMIN_BC_NODE_INFO_FILE_NAME $SUPER_ADMIN
     runBcConnectorOnDocker $SUPER_ADMIN
 
     cd ../$APP_NAME-$BC_CONNECTOR-$ADMIN 
+    generatBcNodeInfoSampleData $ADMIN_BC_NODE_INFO_FILE_NAME $ADMIN
     runBcConnectorOnDocker $ADMIN
 
     cd ../$APP_NAME-$BC_CONNECTOR-$STAKEHOLDER
+    generatBcNodeInfoSampleData $STAKEHOLDER_BC_NODE_INFO_FILE_NAME $STAKEHOLDER
     runBcConnectorOnDocker $STAKEHOLDER
 
     cd ../$APP_NAME-$BC_CONNECTOR-$MLOPS
+    generatBcNodeInfoSampleData $MLOPS_BC_NODE_INFO_FILE_NAME $MLOPS
     runBcConnectorOnDocker $MLOPS
 
     cd ../$APP_NAME-$BC_CONNECTOR-$AI_ENGINEER
+    generatBcNodeInfoSampleData $AI_ENGINEER_BC_NODE_INFO_FILE_NAME $AI_ENGINEER
     runBcConnectorOnDocker $AI_ENGINEER
 else
 
@@ -178,7 +183,7 @@ cd ../$APP_NAME-$BC_CONNECTOR-$STAKEHOLDER
 # Set .env file for o3-sh
 setupDotEnv $STAKEHOLDER
 # Setup connection profile for o3-sh
-setupConnectionProfile $STAKEHOLDER $STAKEHOLDER_COONECTION_PROFILE
+setupConnectionProfile $STAKEHOLDER $STAKEHOLDER_CONNECTION_PROFILE
 # Copy the crypto-config from bta-ca and paste on the blockchain connector at src/blockchain-files/crypto-files.
 setupCryptoFiles $STAKEHOLDER
 # Up the docker for o3-sh
@@ -214,6 +219,8 @@ runBcConnectorOnDocker $AI_ENGINEER
 # Sample data o1-super-admin on PeerO5AIEngineerBtaKilroy.md file inside the bc-connector-node-info
 generatBcNodeInfoSampleData $AI_ENGINEER_BC_NODE_INFO_FILE_NAME $AI_ENGINEER
 echo "======================================================================================================================================================================================================>"
+fi
+
 
 echo -e "${Green}"
 echo "---------------------------------------------------"
@@ -224,4 +231,3 @@ echo "---------------------------------------------------"
 echo -e "${Color_Off}"
 echo -e "${BOLD_Green}Blockchain Connector Node Connections data are saved on the folder:  bta-bc-connector/bc-connector-node-info${Color_Off}"
 echo -e ""
-fi
