@@ -77,7 +77,7 @@ echo -e "${YELLOW}Successfully removed docker danling images${Color_Off}"
 # Function run bc connector on docker  
 function runBcConnectorOnDocker(){
 echo -e "${BOLD_Green}Starting docker for bta_bc_connector_$1${Color_Off}"
-docker compose up -d dev
+. ./dev-deploy.sh
 
 # Remove development stage image or unused image of the docker
 removeDanlingImages
@@ -91,7 +91,7 @@ echo -e "${BLUE}Generating bc node info sample data of $2${Color_Off}"
 source .env
 cat << EOF > ../$BC_CONNECTOR-$NODE_INFO/$1
 ORG_NAME=$ORG_NAME
-BC_CONNECTOR_NODE_URL=http://$BLOCKCHAIN_NETWORK_IP_ADDRESS:$APP_PORT
+BC_CONNECTOR_NODE_URL=http://$BTA_BC_CONNECTOR_NAME:3000
 AUTHORIZATION_TOKEN=$AUTHORIZATION_TOKEN
 EOF
 echo -e "${BLUE}Generated bc node info sample data of $2${Color_Off}"
