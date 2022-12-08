@@ -124,7 +124,6 @@ mkdir -p  $BC_CONNECTOR-$NODE_INFO
 # Clone the bc-connector repo from bitbucket
 git clone https://bitbucket.org/kilroy/$BC_CONNECTOR.git
 cd $BC_CONNECTOR 
-git checkout dev
 
 # Make essential directories for blockchain connector 
 mkdir -p $CONNECTION_PROFILE_DIR
