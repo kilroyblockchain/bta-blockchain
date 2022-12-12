@@ -55,7 +55,7 @@ fetchPackageId(){
 }
 
 approveChaincode(){
-    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode approveformyorg -o $ORDERER0_NAME:$ORDERER0_PORT --channelID $CHANNEL_NAME --name $CHAINCODE_NAME --version 1.0 --package-id $PACKAGE_ID --sequence 1 --tls --cafile $ORDERER_TLS_CA
+    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode approveformyorg -o $ORDERER0_NAME:$ORDERER0_PORT --channelID $CHANNEL_NAME --name $CHAINCODE_NAME --signature-policy "OR($1)" --version 1.0 --package-id $PACKAGE_ID --sequence 1 --tls --cafile $ORDERER_TLS_CA
     res=$?
     { set +x; } 2>/dev/null
     verifyResult $res "Failed to approve chaincode $CHAINCODE_NAME on channel $CHANNEL_NAME"
@@ -65,7 +65,7 @@ approveChaincode(){
 }
 
 checkCommitReadiness(){
-    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode checkcommitreadiness --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --version 1.0 --sequence 1 --output json
+    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode checkcommitreadiness --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --signature-policy "OR($1)" --version 1.0 --sequence 1 --output json
     res=$?
     { set +x; } 2>/dev/null
     verifyResult $res "Failed to check commit of chaincode $CHAINCODE_NAME on channel $CHANNEL_NAME"
@@ -75,7 +75,7 @@ checkCommitReadiness(){
 }
 
 commitChaincode(){
-    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode commit -o ${ORDERER0_NAME}:$ORDERER0_PORT --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --version 1.0 --sequence 1 --tls --cafile $ORDERER_TLS_CA --peerAddresses $PEER_ADMIN_O2_NAME:$PEER_ADMIN_O2_PORT --tlsRootCertFiles $PEER_ADMIN_O2_TLS_ROOTCERT_FILE --peerAddresses $PEER_SH_O3_NAME:$PEER_SH_O3_PORT --tlsRootCertFiles $PEER_SH_O3_TLS_ROOTCERT_FILE --peerAddresses $PEER_MLOPS_O4_NAME:$PEER_MLOPS_O4_PORT --tlsRootCertFiles $PEER_MLOPS_O4_TLS_ROOTCERT_FILE --peerAddresses $PEER_AI_ENGINEER_O5_NAME:$PEER_AI_ENGINEER_O5_PORT --tlsRootCertFiles $PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE
+    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode commit -o ${ORDERER0_NAME}:$ORDERER0_PORT --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --signature-policy "OR($1)" --version 1.0 --sequence 1 --tls --cafile $ORDERER_TLS_CA --peerAddresses $PEER_ADMIN_O2_NAME:$PEER_ADMIN_O2_PORT --tlsRootCertFiles $PEER_ADMIN_O2_TLS_ROOTCERT_FILE --peerAddresses $PEER_SH_O3_NAME:$PEER_SH_O3_PORT --tlsRootCertFiles $PEER_SH_O3_TLS_ROOTCERT_FILE --peerAddresses $PEER_MLOPS_O4_NAME:$PEER_MLOPS_O4_PORT --tlsRootCertFiles $PEER_MLOPS_O4_TLS_ROOTCERT_FILE --peerAddresses $PEER_AI_ENGINEER_O5_NAME:$PEER_AI_ENGINEER_O5_PORT --tlsRootCertFiles $PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE
     res=$?
     { set +x; } 2>/dev/null
     verifyResult $res "Failed to installed and deployed chaincode ${CHAINCODE_NAME} in channel"
@@ -87,7 +87,7 @@ commitChaincode(){
 }
 
 commitChaincodeO5AIEngineer(){
-    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode commit -o ${ORDERER0_NAME}:$ORDERER0_PORT --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --version 1.0 --sequence 1 --tls --cafile $ORDERER_TLS_CA --peerAddresses $PEER_AI_ENGINEER_O5_NAME:$PEER_AI_ENGINEER_O5_PORT --tlsRootCertFiles $PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE
+    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode commit -o ${ORDERER0_NAME}:$ORDERER0_PORT --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --signature-policy "OR($1)" --version 1.0 --sequence 1 --tls --cafile $ORDERER_TLS_CA --peerAddresses $PEER_AI_ENGINEER_O5_NAME:$PEER_AI_ENGINEER_O5_PORT --tlsRootCertFiles $PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE
     res=$?
     { set +x; } 2>/dev/null
     verifyResult $res "Failed to installed and deployed chaincode ${CHAINCODE_NAME} in channel"
@@ -110,8 +110,8 @@ installChaincodeC1Channel(){
     packageChaincode
     installChaincode
     fetchPackageId
-    approveChaincode
-    checkCommitReadiness
+    approveChaincode "'PeerO2AdminBtaKilroyMSP.peer','PeerO3ShBtaKilroyMSP.peer','PeerO4MLOpsBtaKilroyMSP.peer','PeerO5AIEngineerBtaKilroyMSP.peer'"
+    checkCommitReadiness "'PeerO2AdminBtaKilroyMSP.peer','PeerO3ShBtaKilroyMSP.peer','PeerO4MLOpsBtaKilroyMSP.peer','PeerO5AIEngineerBtaKilroyMSP.peer'"
 
     # ***************O3 STAKE HOLDER***************
     export CHAINCODE_NAME=$1
@@ -122,8 +122,8 @@ installChaincodeC1Channel(){
     export PEER_MSPID=PeerO3ShBtaKilroyMSP
     installChaincode
     fetchPackageId
-    approveChaincode
-    checkCommitReadiness
+    approveChaincode "'PeerO2AdminBtaKilroyMSP.peer','PeerO3ShBtaKilroyMSP.peer','PeerO4MLOpsBtaKilroyMSP.peer','PeerO5AIEngineerBtaKilroyMSP.peer'"
+    checkCommitReadiness "'PeerO2AdminBtaKilroyMSP.peer','PeerO3ShBtaKilroyMSP.peer','PeerO4MLOpsBtaKilroyMSP.peer','PeerO5AIEngineerBtaKilroyMSP.peer'"
 
     # ***************O4 MLOPS ENGINEER***************
     export CHAINCODE_NAME=$1
@@ -134,8 +134,8 @@ installChaincodeC1Channel(){
     export PEER_MSPID=PeerO4MLOpsBtaKilroyMSP
     installChaincode
     fetchPackageId
-    approveChaincode
-    checkCommitReadiness
+    approveChaincode "'PeerO2AdminBtaKilroyMSP.peer','PeerO3ShBtaKilroyMSP.peer','PeerO4MLOpsBtaKilroyMSP.peer','PeerO5AIEngineerBtaKilroyMSP.peer'"
+    checkCommitReadiness "'PeerO2AdminBtaKilroyMSP.peer','PeerO3ShBtaKilroyMSP.peer','PeerO4MLOpsBtaKilroyMSP.peer','PeerO5AIEngineerBtaKilroyMSP.peer'"
 
 
     # ***************O5 AI ENGINEER***************
@@ -164,10 +164,10 @@ installChaincodeC1Channel(){
     export PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
     installChaincode
     fetchPackageId
-    approveChaincode
-    checkCommitReadiness
+    approveChaincode "'PeerO2AdminBtaKilroyMSP.peer','PeerO3ShBtaKilroyMSP.peer','PeerO4MLOpsBtaKilroyMSP.peer','PeerO5AIEngineerBtaKilroyMSP.peer'"
+    checkCommitReadiness "'PeerO2AdminBtaKilroyMSP.peer','PeerO3ShBtaKilroyMSP.peer','PeerO4MLOpsBtaKilroyMSP.peer','PeerO5AIEngineerBtaKilroyMSP.peer'"
     
-    commitChaincode
+    commitChaincode "'PeerO2AdminBtaKilroyMSP.peer','PeerO3ShBtaKilroyMSP.peer','PeerO4MLOpsBtaKilroyMSP.peer','PeerO5AIEngineerBtaKilroyMSP.peer'"
 }
 
 installChaincodeO5AIEngineerChannel(){
@@ -186,9 +186,9 @@ installChaincodeO5AIEngineerChannel(){
     packageChaincode
     installChaincode
     fetchPackageId
-    approveChaincode
-    checkCommitReadiness
-    commitChaincodeO5AIEngineer
+    approveChaincode "'PeerO5AIEngineerBtaKilroyMSP.peer'"
+    checkCommitReadiness "'PeerO5AIEngineerBtaKilroyMSP.peer'"
+    commitChaincodeO5AIEngineer "'PeerO5AIEngineerBtaKilroyMSP.peer'"
 }
 
 CHAINCODE_NAME=$1

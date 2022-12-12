@@ -16,7 +16,7 @@ export NODE_INFO=node-info
 # Blockchain connector directories exports
 export CONNECTION_PROFILE_DIR=src/blockchain-files/connection-profile
 export CRYPTO_FILES_DIR=src/blockchain-files/crypto-files
-export ORDERER_ORGANIZATION_DIR=$CRYPTO_FILES_DIR/ordererOrganizations
+export ORDERER_ORGANIZATION_DIR=$CRYPTO_FILES_DIR
 export PEER_ORGANIZATION_DIR=$CRYPTO_FILES_DIR/peerOrganizations
 
 # connection profile exports
