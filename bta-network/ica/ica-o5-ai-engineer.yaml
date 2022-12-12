@@ -6,7 +6,7 @@
 version: '2'
 
 networks:
-  bta-bc-network:
+  bta-network:
 
 services:
   ica.o5-ai-engineer.bta.kilroy:
