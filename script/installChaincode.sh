@@ -25,7 +25,7 @@ installGoDependencies(){
 }
    
 packageChaincode(){
-    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode package $CHAINCODE_NAME.tar.gz --path github.com/chaincode/${CHAINCODE_NAME} --lang golang --label ${CHAINCODE_NAME}_${CHANNEL_NAME}_1
+    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode package ${CHAINCODE_NAME}_${CHANNEL_NAME}.tar.gz --path github.com/chaincode/${CHAINCODE_NAME} --lang golang --label ${CHAINCODE_NAME}_${CHANNEL_NAME}_1
     res=$?
     { set +x; } 2>/dev/null
     verifyResult $res "Failed to package chaincode $CHAINCODE_NAME"
@@ -35,8 +35,7 @@ packageChaincode(){
 }
 
 installChaincode(){
-    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode install $CHAINCODE_NAME.tar.gz
-
+    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode install ${CHAINCODE_NAME}_${CHANNEL_NAME}.tar.gz
      res=$?
      { set +x; } 2>/dev/null
     verifyResult $res "Failed to install chaincode on peer"
@@ -45,24 +44,17 @@ installChaincode(){
     successln "---------------------------------------------------------------------------"
 }
 
-checkQueryInstalled(){
-    echo "HERE"
-    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode queryinstalled | tee output.txt
-    res=$?
-    { set +x; } 2>/dev/null
-    verifyResult $res "Failed to check query installed"
-    successln "---------------------------------------------------------------------------"
-    successln "Successfully checked query installed"
-    successln "---------------------------------------------------------------------------"
-
+fetchPackageId(){
+    docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode calculatepackageid ${CHAINCODE_NAME}_${CHANNEL_NAME}.tar.gz | tee output.txt
     cat output.txt
-    export PACKAGE_ID=`sed -n '/Package/{s/^Package ID: //; s/, Label:.*$//; p;}' output.txt`
+    export PACKAGE_ID=`cat output.txt`
+    echo "===========================Package ID==========================="
     echo $PACKAGE_ID
+    echo "===========================Package ID==========================="
     rm output.txt
 }
 
 approveChaincode(){
-
     docker exec -e CORE_PEER_ADDRESS=$PEER_NAME:$PEER_PORT -e CORE_PEER_LOCALMSPID=$PEER_MSPID -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/msp $CLI_NAME peer lifecycle chaincode approveformyorg -o $ORDERER0_NAME:$ORDERER0_PORT --channelID $CHANNEL_NAME --name $CHAINCODE_NAME --version 1.0 --package-id $PACKAGE_ID --sequence 1 --tls --cafile $ORDERER_TLS_CA
     res=$?
     { set +x; } 2>/dev/null
@@ -117,7 +109,7 @@ installChaincodeC1Channel(){
     installGoDependencies
     packageChaincode
     installChaincode
-    checkQueryInstalled
+    fetchPackageId
     approveChaincode
     checkCommitReadiness
 
@@ -129,7 +121,7 @@ installChaincodeC1Channel(){
     export PEER_PORT=7071
     export PEER_MSPID=PeerO3ShBtaKilroyMSP
     installChaincode
-    checkQueryInstalled
+    fetchPackageId
     approveChaincode
     checkCommitReadiness
 
@@ -141,7 +133,7 @@ installChaincodeC1Channel(){
     export PEER_PORT=7081
     export PEER_MSPID=PeerO4MLOpsBtaKilroyMSP
     installChaincode
-    checkQueryInstalled
+    fetchPackageId
     approveChaincode
     checkCommitReadiness
 
@@ -171,7 +163,7 @@ installChaincodeC1Channel(){
     export PEER_AI_ENGINEER_O5_PORT=7091
     export PEER_AI_ENGINEER_O5_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$PEER_ADMIN_NAME/peers/$PEER_NAME/tls/tlscacerts/tls-localhost-7054.pem
     installChaincode
-    checkQueryInstalled
+    fetchPackageId
     approveChaincode
     checkCommitReadiness
     
@@ -193,7 +185,7 @@ installChaincodeO5AIEngineerChannel(){
     installGoDependencies
     packageChaincode
     installChaincode
-    checkQueryInstalled
+    fetchPackageId
     approveChaincode
     checkCommitReadiness
     commitChaincodeO5AIEngineer
@@ -204,5 +196,3 @@ CHAINCODE_NAME=$1
 
 installChaincodeC1Channel $CHAINCODE_NAME
 installChaincodeO5AIEngineerChannel $CHAINCODE_NAME
-
-
