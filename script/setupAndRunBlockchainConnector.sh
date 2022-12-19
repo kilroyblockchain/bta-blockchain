@@ -77,7 +77,6 @@ echo -e "${YELLOW}Successfully removed docker danling images${Color_Off}"
 # Function run bc connector on docker  
 function runBcConnectorOnDocker(){
 echo -e "${BOLD_Green}Starting docker for bta_bc_connector_$1${Color_Off}"
-# docker compose up -d dev
 . ./dev-deploy.sh
 
 # Remove development stage image or unused image of the docker
@@ -96,6 +95,7 @@ BC_CONNECTOR_NODE_URL=http://$BTA_BC_CONNECTOR_NAME:3000
 AUTHORIZATION_TOKEN=$AUTHORIZATION_TOKEN
 EOF
 echo -e "${BLUE}Generated bc node info sample data of $2${Color_Off}"
+
 }
 
 # Check bta-bc-connector directory if exits delete
@@ -162,6 +162,7 @@ setupCryptoFiles $SUPER_ADMIN
 runBcConnectorOnDocker $SUPER_ADMIN
 # Sample data o1-super-admin on PeerO1SuperAdminBtaKilroy.md file inside the bc-connector-node-info
 generatBcNodeInfoSampleData $SUPER_ADMIN_BC_NODE_INFO_FILE_NAME $SUPER_ADMIN
+
 echo "======================================================================================================================================================================================================>"
 
 # Goto bta-bc-connector-o2-admin directory and setup .env file and setup connection profile
